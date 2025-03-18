@@ -200,7 +200,7 @@ const BloodInventoryForm = () => {
               textDecoration: 'none',
               color: '#ffffff',
               fontWeight: '500',
-              transition: 'color 0.3s ease',
+              transition: 'color 0.4s ease',
               fontSize: '18px',
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
