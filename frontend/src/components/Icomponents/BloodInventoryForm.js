@@ -171,7 +171,7 @@ const BloodInventoryForm = () => {
               color: '#ffffff',
               fontWeight: '500',
               transition: 'color 0.3s ease',
-              fontSize: '18px',
+              fontSize: '17.5px',
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
