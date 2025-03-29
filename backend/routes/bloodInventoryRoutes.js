@@ -34,41 +34,51 @@ router.get('/', async (req, res) => {
     }
 });
 
-//Update: Update stock when blood is used or donated
-router.put('/update', async (req, res) => {
-    const { bloodType, unitsAvailable, status } = req.body;
+// Update: Update stock when blood is used or donated using a dynamic ID
+router.put('/update/:id', async (req, res) => {
+    const { id } = req.params;
+    const { unitsAvailable, status } = req.body;
 
     try {
-        const updatedBlood = await BloodInventory.findOneAndUpdate(
-            { bloodType },  // Find by bloodType
+        const updatedBlood = await BloodInventory.findByIdAndUpdate(
+            id,
             { unitsAvailable, status },
             { new: true }
         );
 
         if (!updatedBlood) {
-            return res.status(404).json({ message: "Blood type not found" });
+            return res.status(404).json({ message: 'Blood inventory not found' });
         }
 
-        res.status(200).json({ message: "Blood inventory updated", data: updatedBlood });
+        res.status(200).json({ message: 'Blood inventory updated', data: updatedBlood });
     } catch (error) {
-        res.status(500).json({ message: "Error updating blood inventory", error });
+        res.status(500).json({ message: 'Error updating blood inventory', error });
     }
 });
 
 
 
-//* 4. Delete: Remove expired or transferred blood units
-router.delete('/delete/:bloodType', async (req, res) => {
-    try {
-        const deletedBlood = await BloodInventory.deleteMany({ bloodType: req.params.bloodType });
 
-        if (deletedBlood.deletedCount === 0) {
-            return res.status(404).json({ message: 'No blood units found for the given blood type' });
+// 4. Delete: Remove a specific blood unit by its ID
+router.delete('/delete/:id', async (req, res) => {
+    const { id } = req.params;
+
+    // Validate the ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'Invalid ID format' });
+    }
+
+    try {
+        const deletedBlood = await BloodInventory.findByIdAndDelete(id);
+
+        if (!deletedBlood) {
+            return res.status(404).json({ message: 'Blood unit not found for the given ID' });
         }
 
-        res.status(200).json({ message: 'Blood units removed successfully', data: deletedBlood });
+        res.status(200).json({ message: 'Blood unit removed successfully', data: deletedBlood });
     } catch (error) {
-        res.status(500).json({ message: 'Error deleting blood units', error });
+        console.error(error);  // Log the error for debugging
+        res.status(500).json({ message: 'Error deleting blood unit', error });
     }
 });
 

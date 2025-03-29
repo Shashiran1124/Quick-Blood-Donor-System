@@ -1,13 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Import BrowserRouter and Routes
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import DashBloodInventoryTable from './components/Icomponents/DashBloodInventoryTable';
+import DashBloodInventoryForm from './components/Icomponents/DashBloodInventoryForm';
+import DashSentBloodTable from './components/Icomponents/DashSentBloodTable';
+import DashSentBloodForm from './components/Icomponents/DashSentBloodForm';
+import HomePage from './components/Icomponents/HomePage';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+         <Route path="/" element={<HomePage />} />
+        <Route path="/dashBloodInventoryTable" element={<DashBloodInventoryTable />} />
+        <Route path="/dashBloodInventoryForm" element={<DashBloodInventoryForm />} />
+        <Route path="/dashsentBloodTable" element={<DashSentBloodTable />} />
+        <Route path="/dashsentBloodForm" element={<DashSentBloodForm />} />
+
+
+        
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

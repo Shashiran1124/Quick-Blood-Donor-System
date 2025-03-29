@@ -4,15 +4,19 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-dotenv.config(); 
+dotenv.config();
 
 // Initialize the Express app
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware to parse JSON
-app.use(bodyParser.json());
+// Enable CORS for all routes
+app.use(cors()); // <-- CORS middleware should be applied first
 
+// Middleware to parse JSON (Replace body-parser with Express built-in method)
+app.use(express.json());  // <-- Use express's built-in JSON parser
+
+// MongoDB URL from environment variables
 const URL = process.env.MONGODB_URL;
 
 // Connect to MongoDB
@@ -25,18 +29,16 @@ mongoose.connect(URL, {
     console.error('MongoDB Connection Error:', err);
 });
 
+// Import and use the routes for blood inventory
 const bloodInventoryRoutes = require('./routes/bloodInventoryRoutes');
-
-
 app.use('/api/blood-inventory', bloodInventoryRoutes);
 
-// Basic route
-app.get('/', (req, res) => {
-    res.send('Welcome to Blood Inventory Management System');
-});
+// Import and use the routes for sent blood
+const sentBloodRoutes = require('./routes/sentBloodRoutes');
+app.use('/api/sent-blood', sentBloodRoutes);
+
 
 // Start the server
-
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
