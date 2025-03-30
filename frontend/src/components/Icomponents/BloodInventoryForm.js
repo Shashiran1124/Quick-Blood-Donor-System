@@ -17,6 +17,31 @@ const BloodInventoryForm = () => {
   const location = useLocation();
   const { item } = location.state || {};
 
+  const handleUnitsChange = (e) => {
+    const value = e.target.value;
+    // Allow only digits (whole numbers) - no decimal points or special characters
+    if (/^\d*$/.test(value)) { 
+      setUnitsAvailable(value);
+    }
+  };
+
+  // Get today's date
+  const today = new Date().toISOString().split("T")[0];
+  
+
+  // Get tomorrow's date
+  const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1))
+    .toISOString()
+    .split("T")[0];
+
+    const handleDonorIDChange = (e) => {
+      const value = e.target.value;
+      // Allow only exactly 12 digits, no letters, special characters, or symbols
+      if (/^\d{0,12}$/.test(value)) {
+        setDonorID(value);
+      }
+    };
+
   useEffect(() => {
     if (item) {
       setBloodType(item.bloodType);
@@ -165,6 +190,7 @@ const BloodInventoryForm = () => {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
+            onClick={() => navigate('/dashsentBloodForm')}
           >
             Donations
           </a>
@@ -179,8 +205,9 @@ const BloodInventoryForm = () => {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
+            
           >
-            Reports
+            Level
           </a>
           <a
             href="#"
@@ -194,7 +221,7 @@ const BloodInventoryForm = () => {
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
           >
-            Contact
+            Report
           </a>
         </div>
       </nav>
@@ -291,8 +318,8 @@ const BloodInventoryForm = () => {
               <input
                 type="number"
                 value={unitsAvailable}
-                onChange={(e) => setUnitsAvailable(e.target.value)}
-                required
+                onChange={handleUnitsChange}
+                placeholder="Enter Units Available"
                 min="0"
                 style={{
                   padding: '8px',
@@ -319,6 +346,8 @@ const BloodInventoryForm = () => {
                 type="date"
                 value={donationDate}
                 onChange={(e) => setDonationDate(e.target.value)}
+                min={today}
+                max={today}
                 required
                 style={{
                   padding: '8px',
@@ -345,6 +374,7 @@ const BloodInventoryForm = () => {
                 type="date"
                 value={expirationDate}
                 onChange={(e) => setExpirationDate(e.target.value)}
+                min={tomorrow}
                 required
                 style={{
                   padding: '8px',
@@ -368,17 +398,17 @@ const BloodInventoryForm = () => {
                 Donor ID
               </label>
               <input
-                type="text"
-                value={donorID}
-                onChange={(e) => setDonorID(e.target.value)}
-                style={{
-                  padding: '8px',
-                  width: '90%',
-                  borderRadius: '5px',
-                  border: '0.3px solid #000000',
-                  fontSize: '14px',
-                }}
-              />
+  type="text"
+  value={donorID}
+  onChange={handleDonorIDChange}
+  style={{
+    padding: '8px',
+    width: '90%',
+    borderRadius: '5px',
+    border: '0.3px solid #000000',
+    fontSize: '14px',
+  }}
+/>
             </div>
 
             <div style={{ marginBottom: '15px' }}>
