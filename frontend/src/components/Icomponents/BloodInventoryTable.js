@@ -203,24 +203,7 @@ const handleDelete = async (id) => {
       </nav>
       <h1 style={{ marginBottom: '20px', color: '#000000', textAlign: 'center',fontWeight: 'bold' }}>Blood Inventory</h1>
 
-      {/* Search Bar */}
-      <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center',marginLeft: '30px' }}>
-        <input
-          type="text"
-          placeholder="Search by Blood Type"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            padding: '10px',
-            fontSize: '16px',
-            border: '1px solid #ccc',
-            borderRadius: '5px',
-            width: '300px',
-            marginRight: '20px'
-          }}
-        />
-      </div>
-
+     
       {loading ? (
         <div style={{ textAlign: 'center' }}>Loading...</div>
       ) : (
