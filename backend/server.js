@@ -25,9 +25,16 @@ connection.once("open", () => {
 
 
 // Example route
-app.get("/", (req, res) => {
+/*app.get("/", (req, res) => {
     res.send("Hello from Backend!");
-});
+});*/
+
+// Routes
+const donAppointmentRoutes = require('./routes/DonAppointments');
+app.use('/DonAppointments', donAppointmentRoutes);
+
+const donorCenterRoutes = require('./routes/donorCenters');
+app.use('/donorCenters', donorCenterRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
