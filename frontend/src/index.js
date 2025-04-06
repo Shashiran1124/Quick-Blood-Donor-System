@@ -1,15 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+//import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Users from './components/Users';
+import AllUsers from './components/AllUsers';
+import UserUpdateForm from './components/UserUpdateForm';
+//import Layout from './components/Layout';
+//import RegistrationFoot from './components/RegistrationFoot';
+//import RegistrationNav from './components/RegistrationNav';
+
+
+
+
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+    
+    <Routes>
+      <Route path="/" element={<Users />} />
+      {/*<Route path="/Users" element={<Users />} />*/}
+      <Route path="/AllUsers" element={<AllUsers />} />
+      <Route path="/UserUpdateForm/:id" element={<UserUpdateForm />} />
+    </Routes>
+   
+    </BrowserRouter>
   </React.StrictMode>
 );
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
