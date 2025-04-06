@@ -2,14 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import reportWebVitals from './reportWebVitals';
+import HospitalBloodInventory from './components/HospitalBloodInventory'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+       <Routes>
+
+        <Route path="/" element={<HospitalBloodInventory />}/>
+
+       </Routes>
+
+    </BrowserRouter>
   </React.StrictMode>
 );
+    //<App />
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

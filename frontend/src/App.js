@@ -2,6 +2,7 @@ import './App.css';
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import HospitalBloodInventory from './components/HospitalBloodInventory';
 
 function App() {
   const [message, setMessage] = useState("");
@@ -15,6 +16,7 @@ function App() {
   return (
     <div className="App">
       <h1>Backend Message: {message}</h1>
+      <HospitalBloodInventory></HospitalBloodInventory>
     </div>
   );
 }
