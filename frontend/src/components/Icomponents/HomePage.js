@@ -179,6 +179,7 @@ export default function HomePage() {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
+            onClick={() => navigate('/dashsentBloodForm')}
           >
             Donations
           </a>
@@ -193,6 +194,7 @@ export default function HomePage() {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
+            onClick={() => navigate('/Dashinvlevel ')}
           >
             Level
           </a>
@@ -592,3 +594,4 @@ export default function HomePage() {
     </div>
   );
 }
+
