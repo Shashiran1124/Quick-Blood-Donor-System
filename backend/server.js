@@ -29,6 +29,9 @@ app.get("/", (req, res) => {
     res.send("Hello from Backend!");
 });
 
+const userRouter = require("./routes/doners.js");
+app.use("/donors",userRouter);
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
