@@ -1,34 +1,44 @@
+const dotenv = require("dotenv");
+dotenv.config();
+const configurationManager = require("./config/ApiConfig.js");
 const mongoose = require("mongoose");
 const express = require("express");
+const logger = require("./utils/logger.js");
+const helmet = require("helmet");
 const cors = require("cors");
-require("dotenv").config();
-
+const { seedDatabaseAsync } = require("./infrastructure/data/mongo.db.data.initializer.js");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors()); // Enable Cross-Origin Requests
+//Enable All CORS Requests
+app.use(
+	cors({
+		origin: "*",
+		allowedHeaders: "*",
+		exposedHeaders: ["Content-Disposition", "Content-Type"],
+	})
+);
+
+app.use(helmet());
 app.use(express.json()); // For parsing application/json
 
+mongoose.connect(configurationManager.connectionString);
 
-const URL = process.env.MONGODB_URL;
-
-mongoose.connect(URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+mongoose.connection.once("open", () => {///
+	logger.info(" Connect Database....");
 });
-
-const connection = mongoose.connection;
-connection.once("open", () => {
-    console.log("MongoDB Connection Success!");
-    });
-
-
 
 // Example route
-app.get("/", (req, res) => {
-    res.send("Hello from Backend!");
+app.get("/", (request, response) => {
+	response.send("<h3>🖥️ Welcome API Documentation</h3>");
 });
 
+const hosBloodRouter = require("./routes/hospitalBloodTypeInventory.js");
+app.use("/hosBloodInve", hosBloodRouter);
+seedDatabaseAsync();
+
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+	logger.info(`Web API Development: ${PORT}`);
 });
+
+/*npm run local:server*/
