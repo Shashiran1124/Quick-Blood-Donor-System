@@ -140,7 +140,7 @@ export default function BloodInventoryPage() {
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{
             padding: '10px',
-            fontSize: '16px',
+            fontSize: '17px',
             border: '1px solid #ccc',
             borderRadius: '5px',
             width: '300px',
