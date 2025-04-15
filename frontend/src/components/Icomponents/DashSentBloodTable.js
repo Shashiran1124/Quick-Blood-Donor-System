@@ -17,7 +17,7 @@ const DashSentBloodTable = () => {
                     sx={{ 
                         padding: "20px", 
                         backgroundColor: "#e0e0e0", // This adds the gray background color
-                        minHeight: "100vh" // Ensure it covers the entire height of the viewport
+                        minHeight: "101vh" // Ensure it covers the entire height of the viewport
                     }}
                 >
                     <SentBloodTable/>
