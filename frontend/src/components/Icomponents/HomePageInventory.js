@@ -124,7 +124,7 @@ export default function HomePageInventory() {
       >
         <div
           style={{
-            fontSize: '1.5rem',
+            fontSize: '1.6rem',
             fontWeight: 'bold',
             color: '#333',
           }}
