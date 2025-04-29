@@ -23,7 +23,7 @@ QuickBlood tackles common challenges in traditional donation systems — such as
 - Strengthens coordination between donors and healthcare providers  
 - Improves emergency response times  
 - Minimizes paperwork and manual processes  
-- Reduces blood wastage through centralized tracking  
+- Reduces blood wastage through centralized trackin 
 - Enhances donor participation and scheduling flexibility  
 
 ---
