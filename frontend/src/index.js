@@ -8,14 +8,14 @@ import DashBloodInventoryTable from './components/Icomponents/DashBloodInventory
 import DashBloodInventoryForm from './components/Icomponents/DashBloodInventoryForm';
 import DashSentBloodTable from './components/Icomponents/DashSentBloodTable';
 import DashSentBloodForm from './components/Icomponents/DashSentBloodForm';
-import HomePage from './components/Icomponents/HomePage';
+import HomePageInventory from './components/Icomponents/HomePageInventory';
 import Dashinvlevel from './components/Icomponents/Dashinvlevel';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-         <Route path="/" element={<HomePage />} />
+         <Route path="/" element={<HomePageInventory />} />
         <Route path="/dashBloodInventoryTable" element={<DashBloodInventoryTable />} />
         <Route path="/dashBloodInventoryForm" element={<DashBloodInventoryForm />} />
         <Route path="/dashsentBloodTable" element={<DashSentBloodTable />} />
