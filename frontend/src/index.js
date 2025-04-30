@@ -9,6 +9,7 @@ import DashBloodInventoryForm from './components/Icomponents/DashBloodInventoryF
 import DashSentBloodTable from './components/Icomponents/DashSentBloodTable';
 import DashSentBloodForm from './components/Icomponents/DashSentBloodForm';
 import HomePage from './components/Icomponents/HomePage';
+import Dashinvlevel from './components/Icomponents/Dashinvlevel';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ root.render(
         <Route path="/dashBloodInventoryForm" element={<DashBloodInventoryForm />} />
         <Route path="/dashsentBloodTable" element={<DashSentBloodTable />} />
         <Route path="/dashsentBloodForm" element={<DashSentBloodForm />} />
+        <Route path="/Dashinvlevel" element={<Dashinvlevel />} />
 
 
         
