@@ -2,7 +2,7 @@ import './App.css';
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-//import HospitalBloodInventory from './components/HospitalBloodInventory';
+import HospitalBloodInventory from './components/HospitalBloodInventory';
 
 function App() {
   const [message, setMessage] = useState("");
