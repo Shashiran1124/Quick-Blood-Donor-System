@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Import BrowserRouter and Routes
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter,Route,Routes } from 'react-router-dom';
 import DonAppointment from './components/DonAppointment';
 import DonAT from './components/DonAT';
 import AppointmentConfirmation from './components/AppointmentConfirmation';
