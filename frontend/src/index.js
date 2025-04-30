@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Import BrowserRouter and Routes
 import './index.css';
+
 import reportWebVitals from './reportWebVitals';
 import DonAppointment from './components/DonAppointment';
 import DonAT from './components/DonAT';
@@ -18,6 +19,8 @@ import DashSentBloodTable from './components/Icomponents/DashSentBloodTable';
 import DashSentBloodForm from './components/Icomponents/DashSentBloodForm';
 import HomePageInventory from './components/Icomponents/HomePageInventory';
 import Dashinvlevel from './components/Icomponents/Dashinvlevel';
+
+import HospitalBloodInventory from './components/HospitalBloodInventory';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -39,10 +42,15 @@ root.render(
     <Route path="/dashsentBloodTable" element={<DashSentBloodTable />} />
     <Route path="/dashsentBloodForm" element={<DashSentBloodForm />} />
     <Route path="/Dashinvlevel" element={<Dashinvlevel />} />
+    <Route path="/" element={<HospitalBloodInventory />}/>
+
     </Routes>
   </BrowserRouter>
-);
 
+
+
+    
+);
 reportWebVitals();
 
 
