@@ -140,7 +140,7 @@ const BloodInventoryForm = () => {
           }}
         >
           <span style={{ color: '#ff4d4f', marginRight: '0.5rem' }}>🩸</span>
-          <span style={{ color: '#c3c3c3', fontSize: '13px' }}>Quick</span>
+          <span style={{ color: '#c3c3c3', fontSize: '13.5px' }}>Quick</span>
           <span style={{ color: '#8B0000', fontSize: '17px' }}>Blood</span>
         </div>
         <div
