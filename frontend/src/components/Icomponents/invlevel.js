@@ -125,7 +125,7 @@ export default function BloodInventoryPage() {
       />
 
       {/* Navigation Bar */}
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', backgroundColor: '#1a2a44' }}>
+      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 2rem', backgroundColor: '#1a2a44' }}>
         {/* Navigation content */}
       </nav>
 
