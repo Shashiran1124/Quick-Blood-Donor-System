@@ -190,7 +190,7 @@ const handleDelete = async (id) => {
             style={{
               textDecoration: 'none',
               color: '#ffffff',
-              fontWeight: '500',
+              fontWeight: '501',
               transition: 'color 0.3s ease',
               fontSize: '18px',
             }}
