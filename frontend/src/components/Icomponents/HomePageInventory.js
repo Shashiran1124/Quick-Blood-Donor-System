@@ -47,7 +47,7 @@ export default function HomePageInventory() {
   return (
     <div
       style={{
-        minHeight: '79vh',
+        minHeight: '80vh',
         backgroundColor: '#f7f7f7',
         fontFamily: 'Arial, sans-serif',
         margin: 0,
