@@ -38,8 +38,6 @@ const sentBloodRoutes = require('./routes/sentBloodRoutes');
 app.use('/api/sent-blood', sentBloodRoutes);
 
 
-HEAD
-
 // Example route
 /*app.get("/", (req, res) => {
     res.send("Hello from Backend!");
@@ -54,13 +52,12 @@ app.use('/donorCenters', donorCenterRoutes);
 
 
 // Start the server
-feature/Blood-Collection-Management
-const dotenv = require("dotenv");
+
 dotenv.config();
 const configurationManager = require("./config/ApiConfig.js");
 const logger = require("./utils/logger.js");
 const helmet = require("helmet");
-const cors = require("cors");
+
 const { seedDatabaseAsync } = require("./infrastructure/data/mongo.db.data.initializer.js");
 
 
