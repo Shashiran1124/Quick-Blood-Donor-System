@@ -129,7 +129,7 @@ export default function BloodInventoryPage() {
         {/* Navigation content */}
       </nav>
 
-      <h1 style={{ marginBottom: '20px', color: '#000000', textAlign: 'center', fontWeight: 'bold' }}>Blood Inventory</h1>
+      <h1 style={{ marginBottom: '21px', color: '#000000', textAlign: 'center', fontWeight: 'bold' }}>Blood Inventory</h1>
 
       {/* Search Bar */}
       <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
