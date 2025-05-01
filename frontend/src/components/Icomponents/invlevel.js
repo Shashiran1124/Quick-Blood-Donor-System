@@ -132,7 +132,7 @@ export default function BloodInventoryPage() {
       <h1 style={{ marginBottom: '21px', color: '#000000', textAlign: 'center', fontWeight: 'bold' }}>Blood Inventory</h1>
 
       {/* Search Bar */}
-      <div style={{ marginBottom: '22px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <input
           type="text"
           placeholder="Search by Blood Type"
