@@ -209,7 +209,7 @@ export default function SentBloodTable() {
       {loading ? (
         <div style={{ textAlign: 'center' }}>Loading...</div>
       ) : (
-        <table style={{ width: '75%', borderCollapse: 'collapse', border: '1px solid #000000', marginLeft: '160px' }}>
+        <table style={{ width: '70%', borderCollapse: 'collapse', border: '1px solid #000000', marginLeft: '160px' }}>
           <thead>
             <tr style={{ backgroundColor: '#100d36', color: '#fff' }}>
               <th style={{ border: '2.2px solid #000000', padding: '12px' }}>Blood Type</th>
