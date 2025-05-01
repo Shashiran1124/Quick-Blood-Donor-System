@@ -110,7 +110,7 @@ const BloodInventoryForm = () => {
           width: '100.7%',
           height: '121%',
           objectFit: 'cover',
-          opacity: 2,
+          opacity: 2.1,
           zIndex: 1,
           pointerEvents: 'none',
         }}
