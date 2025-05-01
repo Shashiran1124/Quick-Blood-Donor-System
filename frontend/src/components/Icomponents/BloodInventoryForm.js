@@ -124,7 +124,7 @@ const BloodInventoryForm = () => {
           alignItems: 'center',
           padding: '1rem 2rem',
           width: '1380px',
-          marginLeft: '-50px',
+          marginLeft: '-53px',
           marginTop: '-20px',
           backgroundColor: '#1a2a44',
           boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
