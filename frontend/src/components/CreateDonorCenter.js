@@ -1,417 +1,220 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
-import {
-  TextField,
-  Button,
-  Typography,
-  Paper,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Switch,
-  Divider,
-  Grid2,
-} from "@mui/material";
-import axios from "axios";
-
-const initialForm = {
-  centerName: "",
-  centerCode: "",
-  address: "",
-  city: "",
-  province: "",
-  postalCode: "",
-  phone: "",
-  email: "",
-  openingStart: "",
-  openingEnd: "",
-  daysOpen: [],
-  donationTypes: [],
-  maxCapacity: "",
-  isActive: true,
-};
-
-
-
-const daysList = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-const donationOptions = ["Whole Blood", "Platelets", "Plasma"];
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const CreateDonorCenter = () => {
-  const navigate = useNavigate();
-  const [formId, setFormId] = useState(null); // Used to track if we are updating
+  const { state } = useLocation();
   const location = useLocation();
-  const { center } = location.state || {}; // Accessing the passed center data
-  const [formData, setFormData] = useState(initialForm);
-  const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState({
+    centerName: '',
+    centerCode: '',
+    address: '',
+    city: '',
+    province: '',
+    postalCode: '',
+    phone: '',
+    email: '',
+    openingStart: '',
+    openingEnd: '',
+    daysOpen: '',
+    donationTypes: '',
+    maxCapacity: '',
+  });
 
-  const validate = () => {
-    const newErrors = {};
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [centerId, setCenterId] = useState(null);
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   
-    if (!formData.centerName.trim()) newErrors.centerName = "Center name is required.";
-    if (!formData.address.trim()) newErrors.address = "Address is required.";
-    if (!formData.city.trim()) newErrors.city = "City is required.";
-  
-    if (!/^\d{10}$/.test(formData.phone)) newErrors.phone = "Phone must be exactly 10 digits.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "Invalid email address.";
-  
-    // ⏰ Validate time format (HH:MM)
-    const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
-  
-    if (!formData.openingStart) {
-      newErrors.openingStart = "Opening time is required.";
-    } else if (!timeRegex.test(formData.openingStart)) {
-      newErrors.openingStart = "Invalid time format (HH:MM).";
-    }
-  
-    if (!formData.openingEnd) {
-      newErrors.openingEnd = "Closing time is required.";
-    } else if (!timeRegex.test(formData.openingEnd)) {
-      newErrors.openingEnd = "Invalid time format (HH:MM).";
-    }
-  
-    if (formData.openingStart && formData.openingEnd) {
-      const [startH, startM] = formData.openingStart.split(":").map(Number);
-      const [endH, endM] = formData.openingEnd.split(":").map(Number);
-      const startMinutes = startH * 60 + startM;
-      const endMinutes = endH * 60 + endM;
-  
-      if (startMinutes === endMinutes) {
-        newErrors.openingEnd = "Opening and closing times cannot be the same.";
-      } else if (startMinutes > endMinutes) {
-        newErrors.openingEnd = "Closing time must be after opening time.";
-      }
-    }
-  
-    if (!formData.daysOpen.length) newErrors.daysOpen = "Select at least one open day.";
-    if (!formData.donationTypes.length) newErrors.donationTypes = "Select at least one donation type.";
-    if (!formData.maxCapacity || isNaN(formData.maxCapacity) || Number(formData.maxCapacity) <= 0) {
-      newErrors.maxCapacity = "Max capacity must be a positive number.";
-    }
-  
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-  
+
   useEffect(() => {
+    const center = location.state?.center;
     if (center) {
-      // If the center data is passed, populate the form fields
       setFormData({
-        centerName: center.centerName,
+        centerName: center.centerName || '',
         centerCode: center.centerCode || '',
-        address: center.address,
-        city: center.city,
+        address: center.address || '',
+        city: center.city || '',
         province: center.province || '',
         postalCode: center.postalCode || '',
-        phone: center.phone,
-        email: center.email,
-        openingStart: center.openingStart,
-        openingEnd: center.openingEnd,
-        daysOpen: center.daysOpen || [],
-        donationTypes: center.donationTypes || [],
-        maxCapacity: center.maxCapacity,
-        isActive: center.isActive,
+        phone: center.phone || '',
+        email: center.email || '',
+        openingStart: center.openingStart || '',
+        openingEnd: center.openingEnd || '',
+        daysOpen: (center.daysOpen || []).join(', '),
+        donationTypes: (center.donationTypes || []).join(', '),
+        maxCapacity: center.maxCapacity || '',
       });
+  
+      if (center._id) {
+        setCenterId(center._id);
+        setIsEditMode(true);
+      }
     }
-  }, [center]); // Run the effect when `center` data changes
+  }, [location.state]);
+  
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
-    let updatedValue = value;
-  
-    // Allow only digits for postalCode and phone
-    if (name === "postalCode" || name === "phone") {
-      updatedValue = value.replace(/\D/g, ""); // Remove non-digit characters
-    }
-  
-    // Allow only letters for centerName, city, and province
-    if (name === "centerName" || name === "city" || name === "province") {
-      updatedValue = value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-letter characters
-    }
-  
-    setFormData((prev) => ({ ...prev, [name]: updatedValue }));
-  };
-  
-
-  const handleCheckboxChange = (value, field) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: prev[field].includes(value)
-        ? prev[field].filter((item) => item !== value)
-        : [...prev[field], value],
-    }));
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validate()) return;
-  
+    console.log('Submitting appointment:', formData);
+
+    if (isEditMode && !centerId) {
+      alert('Invalid appointment ID');
+      return;
+    }
+
+    
+
+    
+
+    const method = isEditMode ? 'PUT' : 'POST';
+
     try {
-      if (formId) {
-        await axios.put(`http://localhost:5000/donorCenters/update/${formId}`, formData);
-        alert(center ? "Center updated successfully" : "Center added successfully");
-        navigate('/DonorCenterList');
-      }
-      if (formId) {
-        const response = await axios.post("http://localhost:5000/donorCenters/add", formData);
-        alert(center ? "Center updated successfully" : "Center added successfully");
-        navigate('/DonorCenterList');
-        if (response.data._id) {
-          setFormId(response.data._id); //  save returned ID
+      const url = isEditMode
+      ? `http://localhost:5000/donorCenters/update/${centerId}`
+      : 'http://localhost:5000/donorCenters/add';
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          centerName: formData.centerName,
+          centerCode: formData.centerCode,
+          address: formData.address,
+          city: formData.city,
+          province: formData.province,
+          postalCode: formData.postalCode,
+          phone: formData.phone,
+          email: formData.email,
+          openingStart: formData.openingStart,
+          openingEnd: formData.openingEnd,
+          daysOpen: formData.daysOpen.split(',').map((day) => day.trim()),
+          donationTypes: formData.donationTypes.split(',').map((type) => type.trim()),
+          maxCapacity: parseInt(formData.maxCapacity),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage(data.message);
+        setError('');
+
+        if (!isEditMode) {
+          setFormData({
+            centerName: '',
+            centerCode: '',
+            address: '',
+            city: '',
+            province: '',
+            postalCode: '',
+            phone: '',
+            email: '',
+            openingStart: '',
+            openingEnd: '',
+            daysOpen: '',
+            donationTypes: '',
+            maxCapacity: '',
+          });
         }
+      } else {
+        setError(data.error || 'Failed to create or update donor center');
       }
-      setFormData(initialForm);
-      setFormId(null); // Reset after submission
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Failed to submit donor center.");
+    } catch (err) {
+      setError('Error connecting to the server');
     }
   };
-  
 
   return (
-    <Paper elevation={4} sx={{ p: 5, maxWidth: 960, mx: "auto", mt: 6, borderRadius: 4 }}>
-      <Typography variant="h4" align="center" gutterBottom>
-        Create New Donor Center
-      </Typography>
-      <Typography variant="subtitle1" align="center" color="text.secondary" gutterBottom>
-        Please fill in the details below to register a new center
-      </Typography>
+    <div style={{ maxWidth: '700px', margin: '30px auto', padding: '25px', background: '#f9f9f9', borderRadius: '10px', fontFamily: 'Arial, sans-serif', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+      <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>
+        {state?.center ? 'Update Donor Center' : 'Create Donor Center'}
+      </h2>
 
-      <form onSubmit={handleSubmit} noValidate>
-        <Divider sx={{ my: 4 }} />
+      {message && <div style={{ marginBottom: '20px', color: 'green', fontWeight: 'bold' }}>{message}</div>}
+      {error && <div style={{ marginBottom: '20px', color: 'red', fontWeight: 'bold' }}>{error}</div>}
 
-        {/* Center Details */}
-        <Typography variant="h6" gutterBottom>
-          Center Details
-        </Typography>
-        <Grid2 container spacing={3}>
-          <Grid2 xs={12} sm={6}>
-            <TextField
-              label="Center Name"
-              name="centerName"
-              value={formData.centerName}
-              onChange={handleChange}
-              fullWidth
-              required
-              error={!!errors.centerName}
-              helperText={errors.centerName}
-            />
-          </Grid2>
-          <Grid2 xs={12} sm={6}>
-            <TextField
-              label="Center Code"
-              name="centerCode"
-              value={formData.centerCode}
-              onChange={handleChange}
-              fullWidth
-            />
-          </Grid2>
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="centerName" style={{ display: 'block', fontWeight: 'bold' }}>Center Name</label>
+          <input type="text" id="centerName" name="centerName" value={formData.centerName} onChange={handleChange} required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-          <Grid2 xs={12}>
-            <TextField
-              label="Address"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              fullWidth
-              multiline
-              required
-              error={!!errors.address}
-              helperText={errors.address}
-            />
-          </Grid2>
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="centerCode" style={{ display: 'block', fontWeight: 'bold' }}>Center Code</label>
+          <input type="text" id="centerCode" name="centerCode" value={formData.centerCode} onChange={handleChange} style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-          <Grid2 xs={12} sm={4}>
-            <TextField
-              label="City"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              fullWidth
-              required
-              error={!!errors.city}
-              helperText={errors.city}
-            />
-          </Grid2>
-          <Grid2 xs={12} sm={4}>
-            <TextField
-              label="Province"
-              name="province"
-              value={formData.province}
-              onChange={handleChange}
-              fullWidth
-            />
-          </Grid2>
-          <Grid2 xs={12} sm={4}>
-            <TextField
-              label="Postal Code"
-              name="postalCode"
-              value={formData.postalCode}
-              onChange={handleChange}
-              fullWidth
-            />
-          </Grid2>
-        </Grid2>
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="address" style={{ display: 'block', fontWeight: 'bold' }}>Address</label>
+          <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-        <Divider sx={{ my: 4 }} />
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="city" style={{ display: 'block', fontWeight: 'bold' }}>City</label>
+          <input type="text" id="city" name="city" value={formData.city} onChange={handleChange} required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-        {/* Contact */}
-        <Typography variant="h6" gutterBottom>
-          Contact Information
-        </Typography>
-        <Grid2 container spacing={3}>
-          <Grid2 xs={12} sm={6}>
-            <TextField
-              label="Phone Number"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              fullWidth
-              required
-              error={!!errors.phone}
-              helperText={errors.phone}
-            />
-          </Grid2>
-          <Grid2 xs={12} sm={6}>
-            <TextField
-              label="Email Address"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              fullWidth
-              required
-              error={!!errors.email}
-              helperText={errors.email}
-            />
-          </Grid2>
-        </Grid2>
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="province" style={{ display: 'block', fontWeight: 'bold' }}>Province</label>
+          <input type="text" id="province" name="province" value={formData.province} onChange={handleChange} style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-        <Divider sx={{ my: 4 }} />
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="postalCode" style={{ display: 'block', fontWeight: 'bold' }}>Postal Code</label>
+          <input type="text" id="postalCode" name="postalCode" value={formData.postalCode} onChange={handleChange} style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-        {/* Operations */}
-        <Typography variant="h6" gutterBottom>
-          Operational Details
-        </Typography>
-        <Grid2 container spacing={3}>
-        <Grid2 xs={12} sm={6}>
-  <TextField
-    label="Opening Time"
-    name="openingStart"
-    type="time"
-    value={formData.openingStart}
-    onChange={handleChange}
-    fullWidth
-    required
-    error={!!errors.openingStart}
-    helperText={errors.openingStart}
-    InputLabelProps={{ shrink: true }}
-    inputProps={{ step: 300 }} // 5 min steps
-  />
-</Grid2>
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="phone" style={{ display: 'block', fontWeight: 'bold' }}>Phone</label>
+          <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required pattern="^\d{10}$" style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-<Grid2 xs={12} sm={6}>
-  <TextField
-    label="Closing Time"
-    name="openingEnd"
-    type="time"
-    value={formData.openingEnd}
-    onChange={handleChange}
-    fullWidth
-    required
-    error={!!errors.openingEnd}
-    helperText={errors.openingEnd}
-    InputLabelProps={{ shrink: true }}
-    inputProps={{ step: 300 }} // 5 min steps
-  />
-</Grid2>
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="email" style={{ display: 'block', fontWeight: 'bold' }}>Email</label>
+          <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-          <Grid2 xs={12}>
-            <Typography variant="subtitle1" sx={{ mt: 1 }}>
-              Days Open
-            </Typography>
-            <FormGroup row>
-              {daysList.map((day) => (
-                <FormControlLabel
-                  key={day}
-                  control={
-                    <Checkbox
-                      checked={formData.daysOpen.includes(day)}
-                      onChange={() => handleCheckboxChange(day, "daysOpen")}
-                    />
-                  }
-                  label={day}
-                />
-              ))}
-            </FormGroup>
-            {errors.daysOpen && (
-              <Typography color="error" variant="caption">
-                {errors.daysOpen}
-              </Typography>
-            )}
-          </Grid2>
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="openingStart" style={{ display: 'block', fontWeight: 'bold' }}>Opening Start (HH:MM)</label>
+          <input type="time" id="openingStart" name="openingStart" value={formData.openingStart} onChange={handleChange} required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-          <Grid2 xs={12}>
-            <Typography variant="subtitle1" sx={{ mt: 1 }}>
-              Accepted Donation Types
-            </Typography>
-            <FormGroup row>
-              {donationOptions.map((type) => (
-                <FormControlLabel
-                  key={type}
-                  control={
-                    <Checkbox
-                      checked={formData.donationTypes.includes(type)}
-                      onChange={() => handleCheckboxChange(type, "donationTypes")}
-                    />
-                  }
-                  label={type}
-                />
-              ))}
-            </FormGroup>
-            {errors.donationTypes && (
-              <Typography color="error" variant="caption">
-                {errors.donationTypes}
-              </Typography>
-            )}
-          </Grid2>
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="openingEnd" style={{ display: 'block', fontWeight: 'bold' }}>Opening End (HH:MM)</label>
+          <input type="time" id="openingEnd" name="openingEnd" value={formData.openingEnd} onChange={handleChange} required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-          <Grid2 xs={12} sm={6} sx={{mt: 2}}>
-            <TextField
-              label="Max Daily Capacity"
-              name="maxCapacity"
-              type="number"
-              value={formData.maxCapacity}
-              onChange={handleChange}
-              fullWidth
-              required
-              error={!!errors.maxCapacity}
-              helperText={errors.maxCapacity}
-            />
-          </Grid2>
-          <Grid2 xs={12} sm={6}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={formData.isActive}
-                  onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                  color="primary"
-                />
-              }
-              label="Center is Active"
-              sx={{ mt: 3 }}
-            />
-          </Grid2>
-        </Grid2>
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="daysOpen" style={{ display: 'block', fontWeight: 'bold' }}>Days Open (comma separated)</label>
+          <input type="text" id="daysOpen" name="daysOpen" value={formData.daysOpen} onChange={handleChange} style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-        <Divider sx={{ my: 4 }} />
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="donationTypes" style={{ display: 'block', fontWeight: 'bold' }}>Donation Types (comma separated)</label>
+          <input type="text" id="donationTypes" name="donationTypes" value={formData.donationTypes} onChange={handleChange} style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
-        <Button type="submit" variant="contained" color="primary">
-          {center ? "Update" : "Create"}
-        </Button>
+        <div style={{ marginBottom: '12px' }}>
+          <label htmlFor="maxCapacity" style={{ display: 'block', fontWeight: 'bold' }}>Max Capacity</label>
+          <input type="number" id="maxCapacity" name="maxCapacity" value={formData.maxCapacity} onChange={handleChange} required min="1" style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+        </div>
 
+        <button type="submit" style={{ backgroundColor: '#007bff', color: 'white', padding: '10px 16px', border: 'none', borderRadius: '4px', cursor: 'pointer', width: '100%' }}>
+          {isEditMode ? 'Update Donor Center' : 'Create Donor Center'}
+        </button>
       </form>
-    </Paper>
+    </div>
   );
 };
 
