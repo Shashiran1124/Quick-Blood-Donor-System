@@ -291,7 +291,7 @@ export default function SentBloodInventoryForm() {
                 required
                 style={{
                   padding: '8px',
-                  width: '80px',
+                  width: '81px',
                   borderRadius: '5px',
                   border: '0.3px solid #000000',
                   fontSize: '14px',

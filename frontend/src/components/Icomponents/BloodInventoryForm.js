@@ -120,6 +120,11 @@ const BloodInventoryForm = () => {
           objectFit: 'cover',
           opacity: 2,
           zIndex: 0,
+          width: '100.8%',
+          height: '122%',
+          objectFit: 'cover',
+          opacity: 2.1,
+          zIndex: 1,
           pointerEvents: 'none',
         }}
       />
@@ -132,7 +137,7 @@ const BloodInventoryForm = () => {
           alignItems: 'center',
           padding: '1.5rem 2rem',
           width: '1380px',
-          marginLeft: '-50px',
+          marginLeft: '-53px',
           marginTop: '-20px',
           backgroundColor: '#1a2a44',
           boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
@@ -148,8 +153,9 @@ const BloodInventoryForm = () => {
           }}
         >
           <span style={{ color: '#ff4d4f', marginRight: '0.5rem' }}>🩸</span>
-          <span style={{ color: '#c3c3c3', fontSize: '15px' }}>Quick</span>
-          <span style={{ color: '#8B0000', fontSize: '18px' }}>BlOOD</span>
+
+          <span style={{ color: '#c3c3c3', fontSize: '13.5px' }}>Quick</span>
+          <span style={{ color: '#8B0000', fontSize: '17.2px' }}>Blood</span>
         </div>
         <div
           style={{
@@ -179,7 +185,7 @@ const BloodInventoryForm = () => {
               color: '#ffffff',
               fontWeight: '500',
               transition: 'color 0.3s ease',
-              fontSize: '18px',
+              fontSize: '17.5px',
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
@@ -208,7 +214,7 @@ const BloodInventoryForm = () => {
               textDecoration: 'none',
               color: '#ffffff',
               fontWeight: '500',
-              transition: 'color 0.3s ease',
+              transition: 'color 0.4s ease',
               fontSize: '18px',
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}

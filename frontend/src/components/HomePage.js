@@ -1,14 +1,13 @@
-// src/components/Icomponents/HomePageInventory.js
+// src/components/Icomponents/HomePage.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import BloodDonationImage from '../../images/blood-donation.jpg';
-import blodTransperencyImage from '../../images/blodTransperency.jpg'; // Ensure this image is in the correct folder
+import image1 from '../images/image1.jpg';
 
-export default function HomePageInventory() {
+export default function HomePage() {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate('/dashBloodInventoryForm');
+    navigate('/');
   };
 
   const handleLearnMore = () => {
@@ -34,7 +33,7 @@ export default function HomePageInventory() {
           opacity: 0, // Start with opacity 0
           animation: `pulse 0.5s ease forwards`, // Apply pulse animation
           animationDelay: `${distanceFromMiddle * 0.05}s`, // Ripple effect
-          fontSize: '51px',fontFamily: 'Poppins, sans-serif',
+          fontSize: '52px',fontFamily: 'Poppins, sans-serif',
            marginBotttom: '17px',
           color: isBloodChar ? '#C70039' : '#000000', // Only "Blood" is red, all others are black
         }}
@@ -47,7 +46,7 @@ export default function HomePageInventory() {
   return (
     <div
       style={{
-        minHeight: '82vh',
+        minHeight: '80vh',
         backgroundColor: '#f7f7f7',
         fontFamily: 'Arial, sans-serif',
         margin: 0,
@@ -116,7 +115,7 @@ export default function HomePageInventory() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '1.5rem 2rem',
+          padding: '1rem 2rem',
           backgroundColor: '#1a2a44',
           boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
           animation: 'fadeIn 1s ease-out',
@@ -124,14 +123,14 @@ export default function HomePageInventory() {
       >
         <div
           style={{
-            fontSize: '1.6rem',
+            fontSize: '1.5rem',
             fontWeight: 'bold',
             color: '#333',
           }}
         >
           <span style={{ color: '#ff4d4f', marginRight: '0.5rem' }}>🩸</span>
           <span style={{ color: '#c3c3c3',fontSize: '13px' }}>Quick</span>
-          <span style={{ color: '#8B0000',fontSize: '16px' }}>Blood</span>
+          <span style={{ color: '#8B0000',fontSize: '17px' }}>Blood</span>
         </div>
         <div
           style={{
@@ -209,7 +208,6 @@ export default function HomePageInventory() {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
-            onClick={() => navigate('/report ')}
           >
             Report
           </a>
@@ -276,7 +274,7 @@ export default function HomePageInventory() {
               onMouseOver={(e) => (e.target.style.transform = 'scale(1.05)')}
               onMouseOut={(e) => (e.target.style.transform = 'scale(1)')}
             >
-              Check Inventory <span>→</span>
+              Shchedule An Appointment <span>→</span>
             </button>
           </div>
         </div>
@@ -287,7 +285,7 @@ export default function HomePageInventory() {
           }}
         >
           <img
-            src={BloodDonationImage}
+            src={image1}
             alt="Blood donation"
             style={{
               width: '135%',
@@ -297,7 +295,7 @@ export default function HomePageInventory() {
             }}
           />
           <img
-  src={blodTransperencyImage}
+  src={image1}
   alt="Blood Transparency"
   onClick={handleGetStarted} // Add this line
   style={{

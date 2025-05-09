@@ -539,6 +539,30 @@ export default function BloodInventoryPage() {
         ) : (
           <div className="no-results">No results found.</div>
         )}
+      {/* Navigation Bar */}
+      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 2rem', backgroundColor: '#1a2a44' }}>
+        {/* Navigation content */}
+      </nav>
+
+      <h1 style={{ marginBottom: '21px', color: '#000000', textAlign: 'center', fontWeight: 'bold' }}>Blood Inventory</h1>
+
+      {/* Search Bar */}
+      <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <input
+          type="text"
+          placeholder="Search by Blood Type"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{
+            padding: '10px',
+            fontSize: '17px',
+            border: '1px solid #ccc',
+            borderRadius: '5px',
+            width: '300px',
+            marginRight: '10px'
+          }}
+        />
+
       </div>
 
       {/* Modal for Donor Details */}

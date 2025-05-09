@@ -304,6 +304,13 @@ export default function BloodInventoryTable() {
           <a
             href="#"
             style={{ textDecoration: 'none', color: '#ffffff', fontWeight: '500', transition: 'color 0.3s ease', fontSize: '18px' }}
+            style={{
+              textDecoration: 'none',
+              color: '#ffffff',
+              fontWeight: '501',
+              transition: 'color 0.3s ease',
+              fontSize: '18px',
+            }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
             onClick={() => navigate('')}
