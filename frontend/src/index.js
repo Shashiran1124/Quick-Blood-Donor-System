@@ -4,15 +4,26 @@ import './index.css';
 import App from './App';
 import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import reportWebVitals from './reportWebVitals';
-import HospitalBloodInventory from './components/HospitalBloodInventory'
+import HospitalBloodInventory from './components/HospitalBloodInventory';
+import CommonPage from './components/CommonPage';
+import Login from './components/Login';
+import AdminDashbord from './components/AdminDashbord';
+import AboutUs from './components/AboutUs';
+import ClientDashBord from './components/ClientDashBord';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
        <Routes>
-
-        <Route path="/" element={<HospitalBloodInventory />}/>
+       <Route path="/ClientDashBord" element={<ClientDashBord />} />,
+       <Route path="/AboutUs" element={<AboutUs />} />,
+       <Route path="/admin-dashbord" element={<AdminDashbord />} />
+       <Route path="/Login" element={<Login />} />,
+       <Route path="/CommonPage" element={<CommonPage />} />,
+       <Route path="/" element={<HospitalBloodInventory />}/>
+       
 
        </Routes>
 
