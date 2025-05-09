@@ -74,7 +74,7 @@ router.delete('/delete/:id', async (req, res) => {
         if (!deletedBlood) {
             return res.status(404).json({ message: 'Blood unit not found for the given ID' });
         }
-
+         
         res.status(200).json({ message: 'Blood unit removed successfully', data: deletedBlood });
     } catch (error) {
         console.error(error);  // Log the error for debugging

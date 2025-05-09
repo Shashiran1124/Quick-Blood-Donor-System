@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BloodTableImage from '../../images/bloodTable.jpg'; // Import the transparent image
+import BloodTableImage from '../../images/bloodTable.jpg';
 
 export default function SentBloodTable() {
   const [sentBlood, setSentBlood] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
+  const [sortConfig, setSortConfig] = useState({ key: 'bloodType', direction: 'asc' });
   const navigate = useNavigate();
 
   // Fetch sent blood records from the server
@@ -52,29 +53,185 @@ export default function SentBloodTable() {
     }
   };
 
+  // Sorting function
+  const sortData = (key) => {
+    const direction = sortConfig.key === key && sortConfig.direction === 'asc' ? 'desc' : 'asc';
+    setSortConfig({ key, direction });
+
+    const sortedData = [...sentBlood].sort((a, b) => {
+      let valueA = a[key];
+      let valueB = b[key];
+
+      if (key === 'sentDate') {
+        valueA = new Date(a[key]);
+        valueB = new Date(b[key]);
+      } else if (typeof valueA === 'string') {
+        valueA = valueA.toLowerCase();
+        valueB = valueB.toLowerCase();
+      }
+
+      if (valueA < valueB) return direction === 'asc' ? -1 : 1;
+      if (valueA > valueB) return direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    setSentBlood(sortedData);
+  };
+
   // Filter records based on search query
   const filteredSentBlood = sentBlood.filter(item =>
     item.bloodType.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const utcDate = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+    return utcDate.toLocaleDateString('en-US', { timeZone: 'UTC' });
+  };
+
+  // Check if sent date is outdated (more than 30 days ago)
+  const getSentStatus = (sentDate) => {
+    const today = new Date();
+    const sent = new Date(sentDate);
+    const diffDays = Math.ceil((today - sent) / (1000 * 60 * 60 * 24));
+    return diffDays > 30 ? 'outdated' : 'recent';
+  };
+
   return (
-    <div>
-      {/* Transparent Background Image */}
-      <img
-        src={BloodTableImage}
-        alt="Blood Transparency Background"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '120%',
-          height: '110%',
-          objectFit: 'cover',
-          opacity: 0.15,
-          zIndex: 10,
-          pointerEvents: 'none',
-        }}
-      />
+    <div
+      style={{
+        backgroundColor: '#ffffff',
+        minHeight: '180vh',
+        paddingBottom: '40px',
+        margin: 0,
+        padding: 0,
+        boxSizing: 'border-box',
+      }}
+    >
+      <style>
+        {`
+          .table-container {
+            width: 80%;
+            margin: 0 auto;
+            overflow-x: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background-color: #fff;
+          }
+          .sent-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+          }
+          .sent-table th {
+            background-color: #100d36;
+            color: #fff;
+            font-weight: bold;
+            padding: 15px;
+            border: 2px solid #000000;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+          }
+          .sent-table th:hover {
+            background-color: #1c1a5a;
+          }
+          .sent-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            color: #333;
+            text-align: center;
+          }
+          .sent-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+          }
+          .sent-table tr:hover {
+            background-color: #f1f1f1;
+            transition: background-color 0.3s ease;
+          }
+          .search-input {
+            padding: 12px;
+            width: 300px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+          .search-input:focus {
+            border-color: #ff4d4f;
+          }
+          .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            margin: 0 4px;
+          }
+          .action-btn:hover {
+            transform: scale(1.05);
+          }
+          .update-btn {
+            background-color: #0711fe;
+            color: #fff;
+          }
+          .update-btn:hover {
+            background-color: #0a1cd6;
+          }
+          .delete-btn {
+            background-color: #fc0707;
+            color: #fff;
+          }
+          .delete-btn:hover {
+            background-color: #d40606;
+          }
+          .outdated {
+            background-color: #ffcccc;
+            color: #d00000;
+            font-weight: bold;
+          }
+          .recent {
+            background-color: #ffffff;
+          }
+          .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff4d4f;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+          }
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          .no-records {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            background-color: #BFBFBF;
+            border-radius: 5px;
+            font-style: italic;
+          }
+          @media (max-width: 768px) {
+            .table-container {
+              width: 90%;
+            }
+            .sent-table th, .sent-table td {
+              padding: 8px;
+              font-size: 14px;
+            }
+            .search-input {
+              width: 90%;
+              max-width: 300px;
+            }
+          }
+        `}
+      </style>
 
       {/* Navigation Bar */}
       <nav
@@ -82,7 +239,7 @@ export default function SentBloodTable() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '1rem 2rem',
+          padding: '1.5rem 2rem',
           width: '1380px',
           marginLeft: '-50px',
           marginTop: '-20px',
@@ -165,8 +322,9 @@ export default function SentBloodTable() {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
+            onClick={() => navigate('/Dashinvlevel')}
           >
-            Reports
+            Level
           </a>
           <a
             href="#"
@@ -180,12 +338,12 @@ export default function SentBloodTable() {
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
           >
-            Contact
+            Reports
           </a>
         </div>
       </nav>
 
-      <h1 style={{ marginBottom: '20px', color: '#000000', textAlign: 'center', fontWeight: 'bold' }}>
+      <h1 style={{ margin: '20px 0', color: '#000000', textAlign: 'center', fontWeight: 'bold' }}>
         Sent Blood Records
       </h1>
 
@@ -196,81 +354,77 @@ export default function SentBloodTable() {
           placeholder="Search by Blood Type"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            padding: '10px',
-            fontSize: '16px',
-            border: '1px solid #ccc',
-            borderRadius: '5px',
-            width: '300px'
-          }}
+          className="search-input"
         />
       </div>
 
       {loading ? (
-        <div style={{ textAlign: 'center' }}>Loading...</div>
+        <div style={{ textAlign: 'center' }}>
+          <div className="loading-spinner"></div>
+          <p>Loading...</p>
+        </div>
+      ) : filteredSentBlood.length === 0 ? (
+        <div className="no-records">
+          {searchQuery ? "No records found for your search." : "No sent blood records available."}
+        </div>
       ) : (
-        <table style={{ width: '70%', borderCollapse: 'collapse', border: '1px solid #000000', marginLeft: '160px' }}>
-          <thead>
-            <tr style={{ backgroundColor: '#100d36', color: '#fff' }}>
-              <th style={{ border: '2.2px solid #000000', padding: '12px' }}>Blood Type</th>
-              <th style={{ border: '2.2px solid #000000', padding: '12px' }}>Sent Units</th>
-              <th style={{ border: '2.2px solid #000000', padding: '12px' }}>Sent Date</th>
-              <th style={{ border: '2.2px solid #000000', padding: '12px' }}>Sent ID</th>
-              <th style={{ border: '2.2px solid #000000', padding: '12px' }}>Status</th>
-              <th style={{ border: '2.2px solid #000000', padding: '12px' }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredSentBlood.length > 0 ? (
-              filteredSentBlood.map((item) => (
-                <tr key={item._id} style={{ backgroundColor: '#BFBFBF' }}>
-                  <td style={{ border: '2.2px solid #000000', padding: '12px' }}>{item.bloodType}</td>
-                  <td style={{ border: '2.2px solid #000000', padding: '12px' }}>{item.sentUnits}</td>
-                  <td style={{ border: '2.2px solid #000000', padding: '12px' }}>
-                    {new Date(item.sentDate).toLocaleDateString('en-US')}
-                  </td>
-                  <td style={{ border: '2.2px solid #000000', padding: '12px' }}>{item.sentID}</td>
-                  <td style={{ border: '2.2px solid #000000', padding: '12px' }}>{item.status}</td>
-                  <td style={{ border: '2.2px solid #000000', padding: '12px', textAlign: 'center' }}>
-                    <button
-                      onClick={() => handleUpdate(item)}
-                      style={{
-                        padding: '8px 12px',
-                        backgroundColor: '#0711fe',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                        marginRight: '8px'
-                      }}
-                    >
-                      Update
-                    </button>
-                    <button
-                      onClick={() => handleDelete(item._id)}
-                      style={{
-                        padding: '8px 12px',
-                        backgroundColor: '#fc0707',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
+        <div className="table-container">
+          <table className="sent-table">
+            <thead>
               <tr>
-                <td colSpan="6" style={{ textAlign: 'center', padding: '12px', backgroundColor: '#BFBFBF' }}>
-                  No records found.
-                </td>
+                <th onClick={() => sortData('bloodType')}>
+                  Blood Type {sortConfig.key === 'bloodType' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => sortData('sentUnits')}>
+                  Sent Units {sortConfig.key === 'sentUnits' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => sortData('sentDate')}>
+                  Sent Date {sortConfig.key === 'sentDate' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => sortData('sentID')}>
+                  Sent ID {sortConfig.key === 'sentID' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => sortData('status')}>
+                  Status {sortConfig.key === 'status' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th>Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredSentBlood.map((item) => {
+                const sentStatus = getSentStatus(item.sentDate);
+                return (
+                  <tr key={item._id}>
+                    <td>{item.bloodType}</td>
+                    <td>{item.sentUnits}</td>
+                    <td className={sentStatus}>
+                      {formatDate(item.sentDate)}
+                      {sentStatus === 'outdated' && ' (Outdated)'}
+                    </td>
+                    <td>{item.sentID}</td>
+                    <td>{item.status}</td>
+                    <td>
+                      <button
+                        onClick={() => handleUpdate(item)}
+                        className="action-btn update-btn"
+                        title="Update this record"
+                      >
+                        Update
+                      </button>
+                      <button
+                        onClick={() => handleDelete(item._id)}
+                        className="action-btn delete-btn"
+                        title="Delete this record"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

@@ -19,11 +19,13 @@ const BloodInventoryForm = () => {
 
   const handleUnitsChange = (e) => {
     const value = e.target.value;
-    // Allow only digits (whole numbers) - no decimal points or special characters
-    if (/^\d*$/.test(value)) { 
-      setUnitsAvailable(value);
-    }
+  
+    // Remove everything that is not a digit
+    const cleanedValue = value.replace(/[^0-9]/g, '');
+  
+    setUnitsAvailable(cleanedValue);
   };
+  
 
   // Get today's date
   const today = new Date().toISOString().split("T")[0];
@@ -42,18 +44,24 @@ const BloodInventoryForm = () => {
       }
     };
 
-  useEffect(() => {
-    if (item) {
-      setBloodType(item.bloodType);
-      setUnitsAvailable(item.unitsAvailable);
-      setDonationDate(new Date(item.donationDate).toLocaleDateString('en-CA'));
-      setExpirationDate(new Date(item.expirationDate).toLocaleDateString('en-CA'));
-      setDonorID(item.donorID);
-      setStatus(item.status);
-      setIsEditing(true);
-    }
-  }, [item]);
+    useEffect(() => {
+      if (item) {
+        setBloodType(item.bloodType);
+        setUnitsAvailable(item.unitsAvailable);
+        // Normalize the dates to UTC and format as YYYY-MM-DD
+        const date = new Date(item.donationDate);
+        const utcDonationDate = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+        setDonationDate(utcDonationDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
   
+        const expDate = new Date(item.expirationDate);
+        const utcExpirationDate = new Date(Date.UTC(expDate.getUTCFullYear(), expDate.getUTCMonth(), expDate.getUTCDate()));
+        setExpirationDate(utcExpirationDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+  
+        setDonorID(item.donorID);
+        setStatus(item.status);
+        setIsEditing(true);
+      }
+    }, [item]);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,8 +70,8 @@ const BloodInventoryForm = () => {
     const bloodInventoryData = {
       bloodType,
       unitsAvailable: Number(unitsAvailable),
-      donationDate: new Date(donationDate),
-      expirationDate: new Date(expirationDate),
+      donationDate: new Date(Date.parse(donationDate + 'T00:00:00Z')), // Treat as UTC
+      expirationDate: new Date(Date.parse(expirationDate + 'T00:00:00Z')),
       donorID,
       status,
     };
@@ -107,11 +115,11 @@ const BloodInventoryForm = () => {
           position: 'absolute',
           top: 0,
           left: 0,
-          width: '100.7%',
-          height: '120%',
+          width: '62.7%',
+          height: '123%',
           objectFit: 'cover',
           opacity: 2,
-          zIndex: 1,
+          zIndex: 0,
           pointerEvents: 'none',
         }}
       />
@@ -122,7 +130,7 @@ const BloodInventoryForm = () => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '1rem 2rem',
+          padding: '1.5rem 2rem',
           width: '1380px',
           marginLeft: '-50px',
           marginTop: '-20px',
@@ -140,8 +148,8 @@ const BloodInventoryForm = () => {
           }}
         >
           <span style={{ color: '#ff4d4f', marginRight: '0.5rem' }}>🩸</span>
-          <span style={{ color: '#c3c3c3', fontSize: '13px' }}>Quick</span>
-          <span style={{ color: '#8B0000', fontSize: '17px' }}>Blood</span>
+          <span style={{ color: '#c3c3c3', fontSize: '15px' }}>Quick</span>
+          <span style={{ color: '#8B0000', fontSize: '18px' }}>BlOOD</span>
         </div>
         <div
           style={{
@@ -205,6 +213,7 @@ const BloodInventoryForm = () => {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
+            onClick={() => navigate('/Dashinvlevel')}
             
           >
             Level
@@ -220,6 +229,7 @@ const BloodInventoryForm = () => {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
+            onClick={() => navigate('')}
           >
             Report
           </a>
@@ -233,7 +243,7 @@ const BloodInventoryForm = () => {
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: 'calc(100vh - 70px)',
-          marginLeft: '-500px',
+          marginLeft: '700px',
           padding: '20px',
           position: 'relative',
           zIndex: 5,
@@ -246,7 +256,7 @@ const BloodInventoryForm = () => {
             WebkitBackdropFilter: 'blur(15px)',
             padding: '20px',
             borderRadius: '10px',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
+            border: '7px solid rgba(255, 255, 255, 0.2)',
             width: '100%',
             maxWidth: '400px',
             boxSizing: 'border-box',
@@ -263,7 +273,7 @@ const BloodInventoryForm = () => {
               marginBottom: '20px',
             }}
           >
-            {isEditing ? 'Edit Donation' : 'Add Donation'}
+            {isEditing ? 'Edit Blood Bank' : 'Blood Bank Intake Sheet'}
           </h1>
 
           <form onSubmit={handleSubmit}>
@@ -321,6 +331,12 @@ const BloodInventoryForm = () => {
                 onChange={handleUnitsChange}
                 placeholder="Enter Units Available"
                 min="0"
+                onKeyDown={(e) => {
+                  // Prevent typing . or any non-digit
+                  if (['.', '-', '+', 'e'].includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
                 style={{
                   padding: '8px',
                   width: '90%',

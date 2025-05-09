@@ -116,7 +116,7 @@ export default function HomePageInventory() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '1rem 2rem',
+          padding: '1.5rem 2rem',
           backgroundColor: '#1a2a44',
           boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
           animation: 'fadeIn 1s ease-out',
@@ -209,6 +209,7 @@ export default function HomePageInventory() {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
+            onClick={() => navigate('/report ')}
           >
             Report
           </a>

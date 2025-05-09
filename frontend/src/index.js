@@ -10,6 +10,8 @@ import DashSentBloodTable from './components/Icomponents/DashSentBloodTable';
 import DashSentBloodForm from './components/Icomponents/DashSentBloodForm';
 import HomePageInventory from './components/Icomponents/HomePageInventory';
 import Dashinvlevel from './components/Icomponents/Dashinvlevel';
+import Dashreport from './components/Icomponents/report';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -21,6 +23,9 @@ root.render(
         <Route path="/dashsentBloodTable" element={<DashSentBloodTable />} />
         <Route path="/dashsentBloodForm" element={<DashSentBloodForm />} />
         <Route path="/Dashinvlevel" element={<Dashinvlevel />} />
+        <Route path="/report" element={<Dashreport />} />
+
+        
 
 
         
