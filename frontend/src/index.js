@@ -19,37 +19,28 @@ import DashSentBloodTable from './components/Icomponents/DashSentBloodTable';
 import DashSentBloodForm from './components/Icomponents/DashSentBloodForm';
 import HomePageInventory from './components/Icomponents/HomePageInventory';
 import Dashinvlevel from './components/Icomponents/Dashinvlevel';
-
 import HospitalBloodInventory from './components/HospitalBloodInventory';
-
+import Dashreport from './components/Icomponents/report';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <Routes>
-    <Route path='/' element={<DonAppointment/>}/>
-    <Route path='/DonAT' element={<DonAT/>}/>
-    <Route path='/AppointmentConfirmation' element={<AppointmentConfirmation/>}/>
-    <Route path='/CreateDonorCenter' element={<CreateDonorCenter/>}/>
-    <Route path='/DonorCenterList' element={<DonorCenterList/>}/>
-    <Route path='/HomePage' element={<HomePage/>}/>
-    <Route path='/Footer' element={<Footer/>}/>
-    <Route path='/Navbar' element={<Navbar/>}/>
+  <React.StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePageInventory />} />
+        <Route path="/" element={<HospitalBloodInventory />}/>
+        <Route path="/dashBloodInventoryTable" element={<DashBloodInventoryTable />} />
+        <Route path="/dashBloodInventoryForm" element={<DashBloodInventoryForm />} />
+        <Route path="/dashsentBloodTable" element={<DashSentBloodTable />} />
+        <Route path="/dashsentBloodForm" element={<DashSentBloodForm />} />
+        <Route path="/Dashinvlevel" element={<Dashinvlevel />} />
+        <Route path="/report" element={<Dashreport />} />
 
-    <Route path="/" element={<HomePageInventory />} />
-    <Route path="/dashBloodInventoryTable" element={<DashBloodInventoryTable />} />
-    <Route path="/dashBloodInventoryForm" element={<DashBloodInventoryForm />} />
-    <Route path="/dashsentBloodTable" element={<DashSentBloodTable />} />
-    <Route path="/dashsentBloodForm" element={<DashSentBloodForm />} />
-    <Route path="/Dashinvlevel" element={<Dashinvlevel />} />
-    <Route path="/" element={<HospitalBloodInventory />}/>
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
 
-    </Routes>
-  </BrowserRouter>
-
-
-
-    
+  
 );
 
 reportWebVitals();

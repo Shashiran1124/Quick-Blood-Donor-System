@@ -127,7 +127,7 @@ export default function SentBloodInventoryForm() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '1rem 2rem',
+          padding: '1.5rem 2rem',
           width: '1380px',
           marginLeft: '-50px',
           marginTop: '-20px',
@@ -239,7 +239,7 @@ export default function SentBloodInventoryForm() {
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: 'calc(100vh - 70px)',
-          marginLeft: '800px',
+          marginLeft: '-600px',
           padding: '20px',
           position: 'relative',
           zIndex: 5,
@@ -269,7 +269,7 @@ export default function SentBloodInventoryForm() {
               marginBottom: '20px',
             }}
           >
-            {isEditMode ? 'Edit Sent Blood Inventory' : 'Add Sent Blood Inventory'}
+            {isEditMode ? 'Edit Blood Outflow ' : 'Blood Outflow Record'}
           </h1>
 
           <form onSubmit={handleSubmit}>
