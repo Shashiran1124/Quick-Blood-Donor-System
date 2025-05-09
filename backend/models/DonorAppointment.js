@@ -10,14 +10,14 @@ const AppointmentSchema = new mongoose.Schema({
   timeSlot: { 
     type: String, 
     required: true, 
-    enum: ['Morning', 'Afternoon', 'Evening'] 
+    enum: ['Morning (8.00 A.M - 11.00 A.M', 'Afternoon (12.00 P.M - 3.00 P.M)', 'Evening (4.00 P.M - 6.00 P.M )'] 
   },
   donationType: { 
     type: String, 
     required: true, 
     enum: ['Whole Blood', 'Plasma', 'Platelets'] 
   },
-  donationCenter: { type: String, required: true },
+  donationCenter: { type: String }, 
   onMedication: { type: String, required: true, enum: ['Yes', 'No'] },
   recentIllness: { type: String, required: true, enum: ['Yes', 'No'] },
   recentDonation: { type: String, required: true, enum: ['Yes', 'No'] },
