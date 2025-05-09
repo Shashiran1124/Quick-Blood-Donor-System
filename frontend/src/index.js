@@ -9,7 +9,7 @@ import DonAT from './components/DonAT';
 import AppointmentConfirmation from './components/AppointmentConfirmation';
 import CreateDonorCenter from './components/CreateDonorCenter';
 import DonorCenterList from './components/DonorCenterList'
-
+import DonorCenterReport from './components/ReportInCenters'
 import HomePage from './components/HomePage';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
@@ -28,6 +28,7 @@ root.render(
     <Route path='/HomePage' element={<HomePage/>}/>
     <Route path='/Footer' element={<Footer/>}/>
     <Route path='/Navbar' element={<Navbar/>}/>
+    <Route path='/ReportInCenters' element={<DonorCenterReport/>}/>
     </Routes>
   </BrowserRouter>
 );

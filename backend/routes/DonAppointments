@@ -50,9 +50,11 @@ router.get('/get/:id', async (req, res) => {
 
 const mongoose = require('mongoose');
 
-router.put('/DonAppointments/update/:id', async (req, res) => {
+router.put('/update/:id', async (req, res) => {
   const id = req.params.id;
   const updatedData = req.body;
+
+
 
   // Validate the ID
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -76,7 +78,7 @@ router.put('/DonAppointments/update/:id', async (req, res) => {
       donationCenter
     } = updatedData;
 
-    if (!donorName || !age || !gender || !email || !contactNumber || !appointmentDate || !timeSlot || !donationType || !donationCenter) {
+    if (!donorName || !age || !gender || !email || !contactNumber || !appointmentDate || !timeSlot || !donationType || !donationCenter ) {
       return res.status(400).json({ message: "All required fields must be provided" });
     }
 
@@ -84,7 +86,7 @@ router.put('/DonAppointments/update/:id', async (req, res) => {
     const updatedAppointment = await DonorAppointment.findByIdAndUpdate(
       id,
       updatedData,  // Use the full updatedData object here
-      { new: true }  // Return the updated document
+      { new: true, runValidators: true } // Return the updated document
     );
 
     if (!updatedAppointment) {
