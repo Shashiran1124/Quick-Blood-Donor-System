@@ -35,6 +35,10 @@ app.get("/", (request, response) => {
 
 const hosBloodRouter = require("./routes/hospitalBloodTypeInventory.js");
 app.use("/hosBloodInve", hosBloodRouter);
+
+const loginRouter = require('./routes/login');
+app.use('/login', loginRouter);
+
 seedDatabaseAsync();
 
 app.listen(PORT, () => {
