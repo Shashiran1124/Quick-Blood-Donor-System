@@ -1,0 +1,124 @@
+const express = require('express');
+const DonorAppointment = require('../models/DonorAppointment');
+
+const router = express.Router();
+
+//📌 Create Appointment
+router.post('/add', async (req, res) => {
+  try {
+    const { 
+      donorName, age, gender, email, contactNumber, 
+      appointmentDate, timeSlot, donationType, 
+      donationCenter, onMedication, recentIllness, 
+      recentDonation, recentVaccination 
+    } = req.body;
+
+    const newAppointment = new DonorAppointment({ 
+      donorName, age, gender, email, contactNumber, 
+      appointmentDate, timeSlot, donationType, 
+      donationCenter, onMedication, recentIllness, 
+      recentDonation, recentVaccination 
+    });
+
+    await newAppointment.save();
+    res.status(201).json({ message: 'Appointment created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//  Get All Appointments
+router.get('/', async (req, res) => {
+  try {
+    const appointments = await DonorAppointment.find();
+    res.json(appointments);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//  Get Single Appointment by ID
+router.get('/get/:id', async (req, res) => {
+  try {
+    const appointment = await DonorAppointment.findById(req.params.id);
+    if (!appointment) return res.status(404).json({ message: 'Appointment not found' });
+    res.json(appointment);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+const mongoose = require('mongoose');
+
+router.put('/update/:id', async (req, res) => {
+  const id = req.params.id;
+  const updatedData = req.body;
+
+
+
+  // Validate the ID
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid appointment ID" });
+  }
+
+  try {
+    console.log('Updating appointment with ID:', id); // Add logging to see if route is hit
+    console.log('Received data for update:', updatedData); // Log the request body
+
+    // Validate required fields
+    const {
+      donorName,
+      age,
+      gender,
+      email,
+      contactNumber,
+      appointmentDate,
+      timeSlot,
+      donationType,
+      donationCenter
+    } = updatedData;
+
+    if (!donorName || !age || !gender || !email || !contactNumber || !appointmentDate || !timeSlot || !donationType || !donationCenter ) {
+      return res.status(400).json({ message: "All required fields must be provided" });
+    }
+
+    // Find the appointment by ID and update
+    const updatedAppointment = await DonorAppointment.findByIdAndUpdate(
+      id,
+      updatedData,  // Use the full updatedData object here
+      { new: true, runValidators: true } // Return the updated document
+    );
+
+    if (!updatedAppointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    console.log('Appointment updated successfully:', updatedAppointment); // Log the updated appointment
+
+    // Send the updated appointment in the response
+    res.json({
+      message: "Appointment updated successfully",
+      updatedAppointment
+    });
+  } catch (err) {
+    console.error('Error updating appointment:', err);
+    res.status(500).json({ error: `Error updating appointment: ${err.message}` });
+  }
+});
+
+
+
+
+
+//  Delete Appointment
+router.delete('/delete/:id', async (req, res) => {
+  try {
+    const deletedAppointment = await DonorAppointment.findByIdAndDelete(req.params.id);
+    if (!deletedAppointment) return res.status(404).json({ message: 'Appointment not found' });
+    res.json({ message: 'Appointment deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+module.exports = router;
