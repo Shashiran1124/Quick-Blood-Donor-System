@@ -14,12 +14,24 @@ function App() {
       .catch(error => console.log(error));
   }, []);
 
+  const navigateToAnotherPage = () => {
+    navigate("/Users"); // This will navigate to /anotherpage route
+  };
+ 
+
   return (
     <div className="App">
       <h1>Backend Message: {message}</h1>
       <button onClick={() => navigate('/DonAppointment')}>go</button>
       <HospitalBloodInventory></HospitalBloodInventory>
+
+      <button onClick={navigateToAnotherPage}>Go to Another Page</button>
+
+
+     
     </div>
+
+    
   );
 }
 

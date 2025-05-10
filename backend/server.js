@@ -92,6 +92,9 @@ app.use('/login', loginRouter);
 
 seedDatabaseAsync();
 
+const userRouter = require("./routes/doners.js");
+app.use("/donors",userRouter);
+
 app.listen(PORT, () => {
 	logger.info(`Web API Development: ${PORT}`);
 });
