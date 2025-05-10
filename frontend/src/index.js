@@ -14,6 +14,9 @@ import UserUpdateForm from './components/UserUpdateForm';
 
 
 
+
+
+
 import DonAppointment from './components/DonAppointment';
 import DonAT from './components/DonAT';
 import AppointmentConfirmation from './components/AppointmentConfirmation';
@@ -38,13 +41,17 @@ root.render(
   
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Users />} />
+    
+    <Routes>
+      <Route path="/" element={<Users />} />
       {/*<Route path="/Users" element={<Users />} />*/}
       <Route path="/AllUsers" element={<AllUsers />} />
       <Route path="/UserUpdateForm/:id" element={<UserUpdateForm />} />
-
-
+    </Routes>
+   
+    </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
          <Route path='/' element={<DonAppointment/>}/>
          <Route path='/DonAT' element={<DonAT/>}/>
          <Route path='/AppointmentConfirmation' element={<AppointmentConfirmation/>}/>
@@ -67,11 +74,12 @@ root.render(
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
-
 );
+
+
+
+  
 reportWebVitals();
-
-
 
 
 
