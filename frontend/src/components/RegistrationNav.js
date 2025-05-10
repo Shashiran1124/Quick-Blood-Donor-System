@@ -30,17 +30,12 @@ const RegistrationNav = () => {
           Home
         </button>
         <button onClick={() => navigate("/AllUsers")} style={navLinkStyle}>
-          Donoers
+          All Donors
         </button>
-        <button onClick={() => navigate("/donations")} style={navLinkStyle}>
-          Donations
+        <button onClick={() => navigate("/")} style={navLinkStyle}>
+          Donor Registration
         </button>
-        <button onClick={() => navigate("/reports")} style={navLinkStyle}>
-          Reports
-        </button>
-        <button onClick={() => navigate("/contact")} style={navLinkStyle}>
-          Contact
-        </button>
+        
       </div>
     </nav>
   );
