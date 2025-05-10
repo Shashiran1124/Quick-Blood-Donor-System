@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import blodTransperencyImage from '../../images/bloodTrans.jpg'; // Import the transparent image
+import Navbar from '../Navbar';
 
 const BloodInventoryForm = () => {
   const [bloodType, setBloodType] = useState('');
@@ -107,36 +108,29 @@ const BloodInventoryForm = () => {
 
   return (
     <div>
+
       {/* Full-Screen Transparent Background Image */}
       <img
         src={blodTransperencyImage}
         alt="Blood Transparency Background"
         style={{
           position: 'absolute',
-          top: 0,
+          top: 80,
           left: 0,
-          width: '62.7%',
-          height: '123%',
-          objectFit: 'cover',
-          opacity: 2,
-          zIndex: 0,
-          width: '100.8%',
-          height: '122%',
+          width: '61.3%',
+          height: '98%',
           objectFit: 'cover',
           opacity: 2.1,
-          zIndex: 1,
           pointerEvents: 'none',
         }}
-      />
-
-      {/* Header (Navbar) */}
+      />{/* Header (Navbar) */}
       <nav
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '1.5rem 2rem',
-          width: '1380px',
+          padding: '2.5rem 2rem',
+          width: '1490px',
           marginLeft: '-53px',
           marginTop: '-20px',
           backgroundColor: '#1a2a44',
@@ -174,7 +168,7 @@ const BloodInventoryForm = () => {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/HomePageInventory')}
           >
             Home
           </a>
@@ -242,6 +236,7 @@ const BloodInventoryForm = () => {
         </div>
       </nav>
 
+
       {/* Form Container */}
       <div
         style={{
@@ -255,6 +250,7 @@ const BloodInventoryForm = () => {
           zIndex: 5,
         }}
       >
+        
         <div
           style={{
             backgroundColor: '#fff6f6',

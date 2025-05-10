@@ -361,8 +361,8 @@ export default function BloodInventoryPage() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '1.5rem 2rem',
-          width: '1380px',
+          padding: '2.5rem 2rem',
+          width: '1490px',
           marginLeft: '-50px',
           marginTop: '-20px',
           backgroundColor: '#1a2a44',
@@ -399,7 +399,7 @@ export default function BloodInventoryPage() {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/HomePageInventory')}
           >
             Home
           </a>
@@ -539,10 +539,11 @@ export default function BloodInventoryPage() {
         ) : (
           <div className="no-results">No results found.</div>
         )}
-      {/* Navigation Bar */}
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 2rem', backgroundColor: '#1a2a44' }}>
+      </div>
+      {/* Commented out duplicate nav to fix syntax error */}
+      {/* <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 2rem', backgroundColor: '#1a2a44' }}>
         {/* Navigation content */}
-      </nav>
+      {/* </nav> */}
 
       <h1 style={{ marginBottom: '21px', color: '#000000', textAlign: 'center', fontWeight: 'bold' }}>Blood Inventory</h1>
 
@@ -562,7 +563,6 @@ export default function BloodInventoryPage() {
             marginRight: '10px'
           }}
         />
-
       </div>
 
       {/* Modal for Donor Details */}

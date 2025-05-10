@@ -111,8 +111,8 @@ export default function Report() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '1.5rem 2rem',
-          width: '1380px',
+          padding: '2.5rem 2rem',
+          width: '1500px',
           marginLeft: '-30px',
           marginTop: '-20px',
           backgroundColor: '#1a2a44',
@@ -149,7 +149,7 @@ export default function Report() {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/HomePageInventory')}
           >
             Home
           </a>

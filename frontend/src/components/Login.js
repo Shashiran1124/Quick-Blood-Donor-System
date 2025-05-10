@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import sideImage from '../images/login.jpg'; // ✅ same image path
 
-const LoginPage = () => {
+const Login = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -17,7 +17,7 @@ const LoginPage = () => {
                 password: password
             });
             //alert(response.data.message);
-            navigate('/admin-dashbord');
+            navigate('/AdminDashboard');
         } catch (error) {
             if (error.response) {
                 alert(error.response.data.message);
@@ -47,7 +47,7 @@ const LoginPage = () => {
                                 textTransform: 'none',
                                 '&:hover': { backgroundColor: '#9a1212' }
                             }}
-                            onClick={() => handleNavigation('/CommonPage')}
+                            onClick={() => handleNavigation('/')}
                         >
                             Home
                         </Button>
@@ -155,4 +155,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default Login;

@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 // ✅ IMPORT IMAGES
 import aboutBg from '../images/aboutus.bt.jpg';
 import leader1 from '../images/navodyaSiri.jpeg';
-import leader2 from '../images/kavindi.jpeg';
+import leader2 from '../images/malindu.jpeg';
 import leader3 from '../images/shashiran.jpeg';
-import leader4 from '../images/malindu.jpeg';
+import leader4 from '../images/kavindi.jpeg';
 
 const AboutUsPage = () => {
     const navigate = useNavigate();
@@ -19,13 +19,13 @@ const AboutUsPage = () => {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             {/* HEADER */}
-            <AppBar position="static" sx={{ backgroundColor: '#B71C1C', color: '#fff' }}>
+            <AppBar position="static" sx={{ backgroundColor: '#333', color: '#fff',padding: '0.5rem 1rem' }}>
                 <Toolbar>
                     <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
                         QuickBlood
                     </Typography>
                     <Stack direction="row" spacing={2}>
-                        <Button sx={{ color: '#fff', fontWeight: 600 }} onClick={() => handleNavigation('/CommonPage')}>
+                        <Button sx={{ color: '#fff', fontWeight: 600 }} onClick={() => handleNavigation('/')}>
                             Home
                         </Button>
                        
@@ -47,7 +47,7 @@ const AboutUsPage = () => {
                 <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 2 }}>
                     Our Story
                 </Typography>
-                <Typography variant="h6" sx={{ maxWidth: 700, mx: 'auto' }}>
+                <Typography variant="h6" sx={{ maxWidth: 700, mx: 'auto', }}>
                     We are committed to providing a lifetime of care. With passion, leadership and innovation, we aim to save lives every day.
                 </Typography>
             </Box>
@@ -130,9 +130,9 @@ const AboutUsPage = () => {
                         <Grid container spacing={3}>
                             {[
                                 { name: 'Dr. Navodya Siriwardana', role: 'Chief Executive Officer', img: leader1 },
-                                { name: 'Dr. Kavindi Siriwardana', role: 'Medical Director', img: leader2 },
+                                { name: 'Dr. Malindu Pemaduwa', role: 'Medical Director', img: leader2 },
                                 { name: 'Dr. Shashiran Thalanagama', role: 'Chief Operations Officer', img: leader3 },
-                                { name: 'Dr. Malindu Pemaduva', role: 'Director Women Affairs and lady care', img: leader4 }
+                                { name: 'Dr. Kavindi Siriwardana', role: 'Director Women Affairs and lady care', img: leader4 }
                             ].map((leader, idx) => (
                                 <Grid item xs={12} sm={6} key={idx}>
                                     <Paper elevation={3} sx={{ p: 2, textAlign: 'center', borderRadius: 2 }}>

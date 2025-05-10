@@ -34,8 +34,8 @@ export default function HomePageInventory() {
           opacity: 0, // Start with opacity 0
           animation: `pulse 0.5s ease forwards`, // Apply pulse animation
           animationDelay: `${distanceFromMiddle * 0.05}s`, // Ripple effect
-          fontSize: '51px',fontFamily: 'Poppins, sans-serif',
-           marginBotttom: '17px',
+          fontSize: '55px',fontFamily: 'Poppins, sans-serif',
+           marginBotttom: '18px',
           color: isBloodChar ? '#C70039' : '#000000', // Only "Blood" is red, all others are black
         }}
       >

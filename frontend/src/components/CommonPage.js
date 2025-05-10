@@ -10,7 +10,7 @@ import slider4 from '../images/slider4.jpg';
 
 const backgroundImages = [slider1, slider2, slider3, slider4];
 
-const HomePage = () => {
+const CommonPage = () => {
     const navigate = useNavigate();
     const [currentImage, setCurrentImage] = useState(0);
 
@@ -28,7 +28,7 @@ const HomePage = () => {
     return (
         <div>
             {/* Navbar */}
-            <AppBar position="static" sx={{ backgroundColor: '#B71C1C', color: '#fff' }}>
+            <AppBar position="static" sx={{ backgroundColor: '#000', color: '#fff',padding: '1rem 1rem', }}>
                 <Toolbar>
                     <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 'bold', color: '#fff' }}>
                         QuickBlood
@@ -39,7 +39,7 @@ const HomePage = () => {
                                 color: '#fff',
                                 fontWeight: 600,
                                 textTransform: 'none',
-                                '&:hover': { backgroundColor: '#9a1212' }
+                                '&:hover': { backgroundColor: '#fd5c63' }
                             }}
                             onClick={() => handleNavigation('/AboutUs')}
                         >
@@ -203,4 +203,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default CommonPage;

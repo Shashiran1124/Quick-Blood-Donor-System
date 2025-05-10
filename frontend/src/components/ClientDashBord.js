@@ -21,7 +21,7 @@ const ClientDashBord = () => {
                         QuickBlood
                     </Typography>
                     <Stack direction="row" spacing={2}>
-                        <Button sx={{ color: '#fff', fontWeight: 600 }} onClick={() => handleNavigation('/CommonPage')}>
+                        <Button sx={{ color: '#fff', fontWeight: 600 }} onClick={() => handleNavigation('/')}>
                             Home
                         </Button>
                         <Button sx={{ color: '#fff', fontWeight: 600 }} onClick={() => handleNavigation('/AboutUs')}>
@@ -61,35 +61,21 @@ const ClientDashBord = () => {
                         Your trusted partner for life-saving blood donations. Join us to make a difference.
                     </Typography>
 
-                    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+                    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} justifyContent={{ sm: 'center' }}>
                         <Button
                             variant="contained"
                             sx={{
-                                backgroundColor: '#fff',
-                                color: '#B71C1C',
-                                fontWeight: 600,
-                                px: 4,
-                                '&:hover': { backgroundColor: '#f4f4f4' }
+                            backgroundColor: '#fff',
+                            color: '#B71C1C',
+                            fontWeight: 600,
+                            px: 6,
+                            '&:hover': { backgroundColor: '#f4f4f4' },
                             }}
-                            onClick={() => handleNavigation('/find-camp')}
+                            onClick={() => handleNavigation('/DonorCenterList')}
                         >
-                            Find Donation Camp
+                            Find Donation Camp & Book An Appointment
                         </Button>
-
-                        <Button
-                            variant="outlined"
-                            sx={{
-                                color: '#fff',
-                                borderColor: '#fff',
-                                fontWeight: 600,
-                                px: 4,
-                                '&:hover': { backgroundColor: '#fff', color: '#B71C1C', borderColor: '#fff' }
-                            }}
-                            onClick={() => handleNavigation('/book-appointment')}
-                        >
-                            Book Blood Appointment
-                        </Button>
-                    </Stack>
+                 </Stack>
                 </Box>
             </Box>
 

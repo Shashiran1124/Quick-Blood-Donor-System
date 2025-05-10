@@ -110,10 +110,10 @@ export default function SentBloodInventoryForm() {
         alt="Blood Transparency Background"
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
+          top: 50,
+          left: -10,
           width: '100.7%',
-          height: '115%',
+          height: '160%',
           objectFit: 'cover',
           opacity: 1,
           zIndex: 1,
@@ -127,8 +127,8 @@ export default function SentBloodInventoryForm() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '1.5rem 2rem',
-          width: '1380px',
+          padding: '2.5rem 2rem',
+          width: '1490px',
           marginLeft: '-50px',
           marginTop: '-20px',
           backgroundColor: '#1a2a44',
@@ -165,7 +165,7 @@ export default function SentBloodInventoryForm() {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/HomePageInventory')}
           >
             Home
           </a>
