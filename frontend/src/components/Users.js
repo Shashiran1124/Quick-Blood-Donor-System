@@ -55,8 +55,26 @@ const Users = () => {
     }
   };
 
+  // ✅ NEW: handle NIC input validation
+  const handleNICChange = (e) => {
+    const value = e.target.value;
+    if (/^\d{0,12}$/.test(value)) { // allow only 0-10 digits
+      setFormData(prevData => ({
+        ...prevData,
+        userId: value
+      }));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // ✅ Validate NIC: must be exactly 10 digits
+    if (!/^\d{12}$/.test(formData.userId)) {
+      alert('NIC must be exactly 12 digits (numbers only).');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:5000/donors/add', {
         method: 'POST',
@@ -82,16 +100,16 @@ const Users = () => {
           Donor Registration
         </Typography>
         <form onSubmit={handleSubmit}>
-          <TextField
-            label="NIC"
-            name="userId"
-            type="number"
-            fullWidth
-            value={formData.userId}
-            onChange={handleChange}
-            required
-            margin="normal"
-          />
+        <TextField
+  label="NIC"
+  name="userId"
+  fullWidth
+  value={formData.userId}
+  onChange={handleNICChange}
+  required
+  margin="normal"
+  helperText="NIC must be exactly 10 digits (numbers only)"
+/>
 
           <TextField
             label="Name"
