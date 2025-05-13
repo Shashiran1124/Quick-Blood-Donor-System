@@ -18,25 +18,25 @@ const AdminDashboard = () => {
             title: 'Manage Donors',
             description: 'View and manage all registered blood donors.',
             icon: <PeopleIcon sx={{ fontSize: 40, color: '#D32F2F' }} />,
-            path: '/manage-donors'
+            path: '/AllUsers'
         },
         {
             title: 'Manage Appointments',
             description: 'Handle donor appointment scheduling and records.',
             icon: <EventIcon sx={{ fontSize: 40, color: '#D32F2F' }} />,
-            path: '/manage-appointments'
+            path: '/DonAT'
         },
         {
             title: 'Camp Blood Inventory',
             description: 'Monitor and manage blood stock collected in camps.',
             icon: <InventoryIcon sx={{ fontSize: 40, color: '#D32F2F' }} />,
-            path: '/manage-inventory'
+            path: '/HomePageInventory'
         },
         {
             title: 'Hospital Blood Inventory',
             description: 'View and manage blood stock in hospital storage.',
             icon: <LocalHospitalIcon sx={{ fontSize: 40, color: '#D32F2F' }} />,
-            path: '/'
+            path: '/HospitalBloodInventry'
         }
     ];
 
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
                                 textTransform: 'none',
                                 '&:hover': { backgroundColor: '#9a1212' }
                             }}
-                            onClick={() => handleNavigation('/admin-dashbord')}
+                            onClick={() => handleNavigation('/')}
                         >
                             Home
                         </Button>

@@ -1,102 +1,68 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const helmet = require('helmet');
 
+// Load environment variables
 dotenv.config();
 
-// Initialize the Express app
+// Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Enable CORS for all routes
-app.use(cors()); // <-- CORS middleware should be applied first
+// Middleware
+app.use(cors());
+app.use(helmet());
+app.use(express.json());
 
-// Middleware to parse JSON (Replace body-parser with Express built-in method)
-app.use(express.json());  // <-- Use express's built-in JSON parser
-
-// MongoDB URL from environment variables
+// MongoDB connection
 const URL = process.env.MONGODB_URL;
+mongoose.connect(URL)
+  .then(() => console.log('MongoDB Connection Success!'))
+  .catch(err => console.error('MongoDB Connection Error:', err));
 
-// Connect to MongoDB
-mongoose.connect(URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('MongoDB Connection Success!');
-}).catch(err => {
-    console.error('MongoDB Connection Error:', err);
-});
+// ROUTES
 
-// Import and use the routes for blood inventory
+// Blood inventory routes
 const bloodInventoryRoutes = require('./routes/bloodInventoryRoutes');
 app.use('/api/blood-inventory', bloodInventoryRoutes);
 
-// Import and use the routes for sent blood
+// Sent blood routes
 const sentBloodRoutes = require('./routes/sentBloodRoutes');
 app.use('/api/sent-blood', sentBloodRoutes);
 
-
-// Example route
-/*app.get("/", (req, res) => {
-    res.send("Hello from Backend!");
-});*/
-
-// Routes
+// Donor appointments
 const donAppointmentRoutes = require('./routes/DonAppointments');
 app.use('/DonAppointments', donAppointmentRoutes);
 
+// Donor centers
 const donorCenterRoutes = require('./routes/donorCenters');
 app.use('/donorCenters', donorCenterRoutes);
 
+// Hospital blood type inventory
+const hosBloodRouter = require('./routes/hospitalBloodTypeInventory');
+app.use('/hosBloodInve', hosBloodRouter);
 
-// Start the server
-
-dotenv.config();
-const configurationManager = require("./config/ApiConfig.js");
-const logger = require("./utils/logger.js");
-const helmet = require("helmet");
-
-const { seedDatabaseAsync } = require("./infrastructure/data/mongo.db.data.initializer.js");
-
-
-//Enable All CORS Requests
-app.use(
-	cors({
-		origin: "*",
-		allowedHeaders: "*",
-		exposedHeaders: ["Content-Disposition", "Content-Type"],
-	})
-);
-
-app.use(helmet());
-app.use(express.json()); // For parsing application/json
-
-mongoose.connect(configurationManager.connectionString);
-
-mongoose.connection.once("open", () => {///
-	logger.info(" Connect Database....");
-});
-
-// Example route
-app.get("/", (request, response) => {
-	response.send("<h3>🖥️ Welcome API Documentation</h3>");
-});
-
-const hosBloodRouter = require("./routes/hospitalBloodTypeInventory.js");
-app.use("/hosBloodInve", hosBloodRouter);
-
+// Login routes
 const loginRouter = require('./routes/login');
 app.use('/login', loginRouter);
 
+// Donors
+const userRouter = require('./routes/doners');
+app.use('/donors', userRouter);
+
+// Seed database (optional - make sure this doesn’t duplicate)
+const { seedDatabaseAsync } = require('./infrastructure/data/mongo.db.data.initializer');
 seedDatabaseAsync();
 
-const userRouter = require("./routes/doners.js");
-app.use("/donors",userRouter);
-
-app.listen(PORT, () => {
-	logger.info(`Web API Development: ${PORT}`);
+// Home route
+app.get('/', (req, res) => {
+  res.send('<h3>🖥️ Welcome API Documentation</h3>');
 });
 
-/*npm run local:server*/
+// Logger
+const logger = require('./utils/logger');
+app.listen(PORT, () => {
+  logger.info(`Web API Development: ${PORT}`);
+});

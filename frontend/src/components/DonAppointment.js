@@ -180,12 +180,14 @@ export default function DonAppointment() {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         minHeight: '80vh',
+        marginTop: '-20px'
+        
       }}>
-      <Navbar />
+      
       
       <div style={{
         maxWidth: '600px',
-        margin: '50px auto',
+        margin: '20px auto',
         padding: '20px',
         borderRadius: '8px',
         boxShadow: '0 8px 32px 0 rgba(190, 73, 73, 0.37)',

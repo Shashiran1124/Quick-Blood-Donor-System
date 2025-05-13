@@ -270,7 +270,7 @@ export default function BloodInventoryTable() {
             style={{ textDecoration: 'none', color: '#ffffff', fontWeight: '500', transition: 'color 0.3s ease', fontSize: '18px' }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/AdminDashboard')}
           >
             Home
           </a>

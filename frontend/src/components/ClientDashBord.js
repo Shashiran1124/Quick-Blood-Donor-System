@@ -62,6 +62,7 @@ const ClientDashBord = () => {
                     </Typography>
 
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} justifyContent={{ sm: 'center' }}>
+                        
                         <Button
                             variant="contained"
                             sx={{
@@ -71,9 +72,9 @@ const ClientDashBord = () => {
                             px: 6,
                             '&:hover': { backgroundColor: '#f4f4f4' },
                             }}
-                            onClick={() => handleNavigation('/DonorCenterList')}
+                            onClick={() => handleNavigation('/DonAppointment')}
                         >
-                            Find Donation Camp & Book An Appointment
+                              Book An Appointment
                         </Button>
                  </Stack>
                 </Box>

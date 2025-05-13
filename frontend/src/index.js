@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Import Brows
 import './index.css';
 //
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Users from './components/Users';
 import AllUsers from './components/AllUsers';
 import UserUpdateForm from './components/UserUpdateForm';
@@ -48,17 +47,12 @@ root.render(
   
   <React.StrictMode>
     <BrowserRouter>
-    
-    <Routes>
-      <Route path="/" element={<Users />} />
-      {/*<Route path="/Users" element={<Users />} />*/}
-      <Route path="/AllUsers" element={<AllUsers />} />
-      <Route path="/UserUpdateForm/:id" element={<UserUpdateForm />} />
-    </Routes>
-   
-    </BrowserRouter>
-    <BrowserRouter>
       <Routes>
+
+        <Route path="/Users" element={<Users />} />
+        <Route path="/AllUsers" element={<AllUsers />} />
+        <Route path="/UserUpdateForm/:id" element={<UserUpdateForm />} />
+
          <Route path='/DonAppointment' element={<DonAppointment/>}/>
          <Route path='/DonAT' element={<DonAT/>}/>
          <Route path='/AppointmentConfirmation' element={<AppointmentConfirmation/>}/>
@@ -77,7 +71,7 @@ root.render(
          <Route path="/Dashinvlevel" element={<Dashinvlevel />} />
          <Route path="/report" element={<Dashreport />} />
 
-         <Route path="HospitalBloodInventry" element={<HospitalBloodInventory />}/>
+         <Route path="/HospitalBloodInventry" element={<HospitalBloodInventory />}/>
          <Route path="/AboutUs" element={<AboutUsPage />}/>
          <Route path="/Login" element={<Login />}/>
          <Route path='/' element={<CommonPage/>}/>
@@ -92,7 +86,7 @@ root.render(
 
 
 
-);
+
 reportWebVitals();
 
 

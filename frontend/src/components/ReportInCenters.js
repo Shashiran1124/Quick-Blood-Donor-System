@@ -251,9 +251,9 @@ export default function DonorCenterReport() {
       <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '2rem 1.5rem', width: '1515px', marginLeft: '-30px', marginTop: '-20px', backgroundColor: '#1a2a44', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', zIndex: 10 }}>
         <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#333' }}><span style={{ color: '#ff4d4f' }}>🩸</span><span style={{ color: '#c3c3c3' }}>Quick</span><span style={{ color: '#8B0000' }}>Blood</span></div>
         <div style={{ display: 'flex', gap: '1.8rem' }}>
-          <a href="#" style={{ color: '#fff', fontWeight: 500, fontSize: 16 }} onMouseOver={e => e.target.style.color='#ff4d4f'} onMouseOut={e => e.target.style.color='#fff'} onClick={() => navigate('/')}>Home</a>
-          <a href="#" style={{ color: '#fff', fontWeight: 500, fontSize: 16 }} onMouseOver={e => e.target.style.color='#ff4d4f'} onMouseOut={e => e.target.style.color='#fff'} onClick={() => navigate('/createDonorCenter')}>Centers</a>
-          <a href="#" style={{ color: '#fff', fontWeight: 500, fontSize: 16 }} onMouseOver={e => e.target.style.color='#ff4d4f'} onMouseOut={e => e.target.style.color='#fff'} onClick={() => navigate('/dashsentBloodForm')}>Donations</a>
+          <a href="#" style={{ color: '#fff', fontWeight: 500, fontSize: 16 }} onMouseOver={e => e.target.style.color='#ff4d4f'} onMouseOut={e => e.target.style.color='#fff'} onClick={() => navigate('/AdminDashboard')}>Home</a>
+          <a href="#" style={{ color: '#fff', fontWeight: 500, fontSize: 16 }} onMouseOver={e => e.target.style.color='#ff4d4f'} onMouseOut={e => e.target.style.color='#fff'} onClick={() => navigate('/DonorCenterList')}>Centers</a>
+          <a href="#" style={{ color: '#fff', fontWeight: 500, fontSize: 16 }} onMouseOver={e => e.target.style.color='#ff4d4f'} onMouseOut={e => e.target.style.color='#fff'} onClick={() => navigate('/DonAT')}>Appointments</a>
           <a href="#" style={{ color: '#fff', fontWeight: 500, fontSize: 16 }} onMouseOver={e => e.target.style.color='#ff4d4f'} onMouseOut={e => e.target.style.color='#fff'}>Report</a>
         </div>
       </nav>

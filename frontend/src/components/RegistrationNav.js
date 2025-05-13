@@ -26,13 +26,13 @@ const RegistrationNav = () => {
         <span style={{ color: "#8B0000", fontSize: "17px" }}>Blood</span>
       </div>
       <div style={{ display: "flex", gap: "2rem" }}>
-        <button onClick={() => navigate("/")} style={navLinkStyle}>
+        <button onClick={() => navigate("/AdminDashboard")} style={navLinkStyle}>
           Home
         </button>
         <button onClick={() => navigate("/AllUsers")} style={navLinkStyle}>
           All Donors
         </button>
-        <button onClick={() => navigate("/")} style={navLinkStyle}>
+        <button onClick={() => navigate("/Users")} style={navLinkStyle}>
           Donor Registration
         </button>
         

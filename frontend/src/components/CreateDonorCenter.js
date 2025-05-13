@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import Navbar from './Navbar';
 import {
@@ -18,6 +18,7 @@ import {
 
 const CreateDonorCenter = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
   const location = useLocation();
   const [formData, setFormData] = useState({
     centerName: '',
@@ -514,6 +515,7 @@ const CreateDonorCenter = () => {
               variant="contained"
               color="primary"
               sx={{ py: 1.5 }}
+              onClick={() => navigate('/DonorCenterList')}
             >
               {isEditMode ? 'Update Donor Center' : 'Create Donor Center'}
             </Button>

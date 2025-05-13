@@ -168,7 +168,7 @@ const BloodInventoryForm = () => {
             }}
             onMouseOver={(e) => (e.target.style.color = '#ff4d4f')}
             onMouseOut={(e) => (e.target.style.color = '#ffffff')}
-            onClick={() => navigate('/HomePageInventory')}
+            onClick={() => navigate('/AdminDashboard')}
           >
             Home
           </a>

@@ -110,10 +110,10 @@ export default function SentBloodInventoryForm() {
         alt="Blood Transparency Background"
         style={{
           position: 'absolute',
-          top: 50,
+          top: 100,
           left: -10,
-          width: '100.7%',
-          height: '160%',
+          width: '90.7%',
+          height: '100%',
           objectFit: 'cover',
           opacity: 1,
           zIndex: 1,

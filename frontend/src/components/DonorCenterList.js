@@ -69,10 +69,20 @@ const DonorCenterList = () => {
 
   return (
     <Box p={3} bgcolor="#f8f9fa" minHeight="100vh">
-      <Typography variant="h4" align="center" fontWeight={700} mb={2} color="primary">
-        Blood Donor Centers
-      </Typography>
-
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Typography variant="h4" fontWeight={700} color="primary">
+          Blood Donor Centers
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate('/CreateDonorCenter')}
+          sx={{ borderRadius: 2 }}
+        >
+          Create New Donor Center
+        </Button>
+      </Box>
+      
       <Box sx={{ mb: 4, maxWidth: 400, mx: 'auto' }}>
         <TextField
           fullWidth

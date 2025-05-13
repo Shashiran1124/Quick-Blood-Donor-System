@@ -26,21 +26,19 @@ const Navbar = () => {
         <span style={{ color: "#8B0000", fontSize: "17px" }}>Blood</span>
       </div>
       <div style={{ display: "flex", gap: "2rem" }}>
-        <button onClick={() => navigate("/")} style={navLinkStyle}>
+        <button onClick={() => navigate("/AdminDashboard")} style={navLinkStyle}>
           Home
         </button>
-        <button onClick={() => navigate("/Users")} style={navLinkStyle}>
-          Inventory
+        <button onClick={() => navigate("/DonorCenterList")} style={navLinkStyle}>
+          Centers
         </button>
         <button onClick={() => navigate("/donations")} style={navLinkStyle}>
           Donations
         </button>
-        <button onClick={() => navigate("/reports")} style={navLinkStyle}>
+        <button onClick={() => navigate("/ReportInCenters")} style={navLinkStyle}>
           Reports
         </button>
-        <button onClick={() => navigate("/contact")} style={navLinkStyle}>
-          Contact
-        </button>
+        
       </div>
     </nav>
   );
